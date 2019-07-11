@@ -1,4 +1,8 @@
 package DB;
 
-public class Document {
+import com.orientechnologies.orient.core.db.ODatabase;
+
+public class Document extends ODatabase
+{
+
 }
