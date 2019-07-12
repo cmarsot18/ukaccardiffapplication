@@ -6,6 +6,7 @@ public class Section
     int subsection_number;
     int successor_number;
 
+
     public Section(){
         name = "None";
         subsection_number = -1;
@@ -38,5 +39,6 @@ public class Section
     public void SetSuccessor_number(int pNumber) {
         this.successor_number = pNumber;
     }
+    public void AddSuccessor()
 
 }
