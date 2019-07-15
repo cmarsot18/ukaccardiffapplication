@@ -1,4 +1,5 @@
 package Document;
+import java.util.ArrayList;
 
 public class Paragraph extends Section
 {
@@ -9,15 +10,15 @@ public class Paragraph extends Section
     String text;
 
     public Paragraph() {
-        super("none",0,0);
+        super();
         R = "r";
         A = "a";
         S = "s";
         E = "e";
         this.text = "text";
     }
-    public Paragraph(String pName, int pSubsctionNumber, int pSuccessorNUmber, String r, String a, String s, String e, String text) {
-        super(pName, pSubsctionNumber,pSuccessorNUmber);
+    public Paragraph(String pName, Section pPredecessor, ArrayList pSuccessors, String r, String a, String s, String e, String text) {
+        super(pName, pPredecessor,pSuccessors);
         R = r;
         A = a;
         S = s;
