@@ -10,13 +10,12 @@ public class Section
     String name;
     int subsection_number;
     ArrayList<Section> Successors;
-    Section Predecessor;
+    Section Predecessor = null;
 
     public Section(){
         name = "None";
         subsection_number = -1;
         Successors=new ArrayList<Section>();
-        Predecessor = new Section();
     }
 
     public Section(String pName,Section pPredecessor, ArrayList<Section> pSuccessors){
