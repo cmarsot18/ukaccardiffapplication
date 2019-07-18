@@ -15,7 +15,7 @@ public class Open_Create extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
-        this.setLayout(new GridLayout(10,10,20,20));
+        this.setLayout(new GridLayout(5,3,20,20));
 
         this.add(new JButton("Open a document"));
 
