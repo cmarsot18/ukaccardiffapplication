@@ -36,6 +36,10 @@ public class Section
         return Successors;
     }
 
+    public Section GetPredecessor(){
+        return this.Predecessor;
+    }
+
     public void SetName(String pName) {
         this.name = name;
     }
