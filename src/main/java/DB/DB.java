@@ -15,16 +15,17 @@ import com.orientechnologies.orient.core.record.OVertex;
 public class DB
 {
     OrientDB Database;
+    boolean ClassNotCreated = true;
 
     public DB(){
         Database = null;
     }
 
-    public boolean Connection(String server,int port,String Login,String Password){
+    public boolean Connection(String URL,String Login,String Password){
         boolean Connection_established;
         StackTraceElement[] tab = null;
         try{
-            String URL="remote"+server+":"+port+"/";
+
             Database = new OrientDB(URL,Login,Password,OrientDBConfig.defaultConfig());
         }catch(Exception e){
             tab = e.getStackTrace();
@@ -39,15 +40,15 @@ public class DB
     }
 
     public void SaveNewDocument(Section root,String Login,String Password){
-        Database.create(root.Getname(),ODatabaseType.PLOCAL);
+        this.Database.create(root.Getname(),ODatabaseType.PLOCAL);
         ODatabaseDocument document = Database.open(root.Getname(),Login,Password);
-        SaveSection(root,document);
+        OClass Section = document.createVertexClass("Section");
+        OClass Paragraph = document.createVertexClass("Paragraph");
+        SaveSection(root,document,Section,Paragraph);
+        document.close();
     }
 
-    public OVertex SaveSection(Section pSection, ODatabaseDocument document){
-
-        OClass Section =  document.createVertexClass("Section");
-        OClass Paragraph = document.createVertexClass("Paragraph");
+    public OVertex SaveSection(Section pSection, ODatabaseDocument document,OClass Paragraph,OClass Section){
         if(pSection instanceof Paragraph){
             OVertex v = document.newVertex(Paragraph);
             v.setProperty("name",pSection.Getname());
@@ -70,7 +71,7 @@ public class DB
             int i;
             for(i=0;i<pSection.GetSuccessors().size();i++){
                 Section stemp = pSection.GetSuccessors().get(i);
-                OVertex vtemp = this.SaveSection(stemp,document);
+                OVertex vtemp = this.SaveSection(stemp,document,Paragraph,Section);
                 document.newEdge(v,vtemp);
             }
             return v;
