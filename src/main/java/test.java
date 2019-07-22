@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class test{
     public static void main(String[] args){
         Section root = new Section();
-        root.SetName("doc_name");
+        root.SetName("doc");
         Section Part1 = new Section();
         Section Part2 = new Section();
         Section Part11 = new Section();
