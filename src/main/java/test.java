@@ -1,24 +1,10 @@
-import com.orientechnologies.orient.core.Orient;
-
-public class test {
+import Window200x400.*;
 
 
+public class test{
+    public static void main(String[] args){
+        new Open_Create();
+    }
 }
 
-window1 :
-    Connecttion
-    open/create
-    document_open
 
-Window2 :
-    text_editor
-
-db :
-    db_init
-    document
-
-error_message :
-    connection fail
-    save
-
-main
