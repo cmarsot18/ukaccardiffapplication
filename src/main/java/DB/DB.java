@@ -8,11 +8,14 @@ import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
+import com.orientechnologies.orient.core.id.ORecordId;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.record.ODirection;
 import com.orientechnologies.orient.core.record.OEdge;
 import com.orientechnologies.orient.core.record.OVertex;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
+
+import java.util.Iterator;
 
 
 public class DB
@@ -66,7 +69,7 @@ public class DB
             OVertex v = document.newVertex(Section);
             v.setProperty("name",pSection.Getname());
             if(pSection.GetPredecessor()==null){
-                v.setProperty("PredecessorName","root");
+                v.setProperty("PredecessorName","root_init_doc");
             }else{
                 v.setProperty("PredecessorName",pSection.GetPredecessor().Getname());
             }
@@ -84,24 +87,46 @@ public class DB
 
     public Section LoadDocument(String DocName,String Login,String Password){
         ODatabaseDocument Doc = Database.open(DocName,Login,Password);
-        OResultSet tryroot =  Doc.query("SELECT * FROM V WHERE PredecessorName = \"root\"");
-        //Stream<OVertex> origin = root.vertexStream();
-
+        OResultSet tryroot =  Doc.query("SELECT * FROM V WHERE PredecessorName = \"root_init_doc\"");
+        String rid =  tryroot.next().getProperty("@rid").toString();
+        ORecordId id = new ORecordId(rid);
+        OVertex root = Doc.getRecord(id);
+        Section res = VertexToSection(root);
         tryroot.close();
-
-
-
-
-        return null;
+        return res;
     }
 
-//    public Section VertexToSection(OVertex pVertex){
-//        Iterable<OVertex> Successors=pVertex.getVertices(ODirection.OUT);
-//        if (pVertex.isVertex()){
-//            //Section S = new Section(pVertex.getProperty("name"), pVertex.getProperty("PredecessorName"));
-//        }
-//
-//
-//    }
+    public Section VertexToSection(OVertex pVertex){
+        Iterable<OVertex> Successors=pVertex.getVertices(ODirection.OUT);
+        String temp = pVertex.getProperty("@class").toString();
+        if(temp.equals("Paragraph")){
+            Section stemp = new Section();
+            temp = pVertex.getProperty("name").toString();
+            stemp.SetName(temp);
+            Iterator<OVertex> I = Successors.iterator();
+            while(I.hasNext()){
+                OVertex vtemp = I.next();
+                Section stemp2 = this.VertexToSection(vtemp);
+                stemp2.SetPredecessor(stemp);
+            }
+            return stemp;
+        }else{
+            Paragraph ptemp = new Paragraph();
+            temp = pVertex.getProperty("name").toString();
+            ptemp.SetName(temp);
+            temp = pVertex.getProperty("R").toString();
+            ptemp.setR(temp);
+            temp = pVertex.getProperty("A").toString();
+            ptemp.setA(temp);
+            temp = pVertex.getProperty("S").toString();
+            ptemp.setS(temp);
+            temp = pVertex.getProperty("S").toString();
+            ptemp.setE(temp);
+            temp = pVertex.getProperty("E").toString();
+            ptemp.setText(temp);
+            return ptemp;
+        }
+
+    }
 
 }

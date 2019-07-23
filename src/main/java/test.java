@@ -80,6 +80,9 @@ public class test{
         boolean Connection = test.Connection("remote:localhost","root","password");
         if (Connection){
             test.SaveNewDocument(root,"admin","admin");
+            Section load = test.LoadDocument("doc","admin","admin");
+            load.SetName("DocBis");
+            test.SaveNewDocument(load,"admin","admin");
         }else{
             System.out.println("fail");
         }
