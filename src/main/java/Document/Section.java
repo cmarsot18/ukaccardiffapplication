@@ -41,7 +41,7 @@ public class Section
     }
 
     public void SetName(String pName) {
-        this.name = name;
+        this.name = pName;
     }
 
     public void SetSubsectionNumber(int pNumber){
@@ -50,6 +50,10 @@ public class Section
 
     public void SetSuccessor_number(ArrayList<Section> pSuccessors) {
         Successors = pSuccessors;
+    }
+
+    public void SetPredecessor(Section pPredecessor){
+        this.Predecessor=pPredecessor;
     }
 
     public void AddSuccessor(int type, String Name){
