@@ -1,4 +1,7 @@
 package Windows;
 
-public class Text_Editor {
+import javax.swing.*;
+
+public class Text_Editor extends JFrame{
+
 }
