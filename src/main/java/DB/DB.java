@@ -99,7 +99,7 @@ public class DB
     public Section VertexToSection(OVertex pVertex){
         Iterable<OVertex> Successors=pVertex.getVertices(ODirection.OUT);
         String temp = pVertex.getProperty("@class").toString();
-        if(temp.equals("Paragraph")){
+        if(temp.equals("Section")){
             Section stemp = new Section();
             temp = pVertex.getProperty("name").toString();
             stemp.SetName(temp);
@@ -108,6 +108,7 @@ public class DB
                 OVertex vtemp = I.next();
                 Section stemp2 = this.VertexToSection(vtemp);
                 stemp2.SetPredecessor(stemp);
+                stemp.AddSuccessor(stemp2);
             }
             return stemp;
         }else{
@@ -120,9 +121,9 @@ public class DB
             ptemp.setA(temp);
             temp = pVertex.getProperty("S").toString();
             ptemp.setS(temp);
-            temp = pVertex.getProperty("S").toString();
-            ptemp.setE(temp);
             temp = pVertex.getProperty("E").toString();
+            ptemp.setE(temp);
+            temp = pVertex.getProperty("Text").toString();
             ptemp.setText(temp);
             return ptemp;
         }

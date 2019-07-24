@@ -56,19 +56,9 @@ public class Section
         this.Predecessor=pPredecessor;
     }
 
-    public void AddSuccessor(int type, String Name){
-        if (type ==1){
-            Section S = new Section();
-            this.Successors.add(S);
-            S.subsection_number=this.Successors.size();
-            S.name = Name;
-        }
-        if(type == 2){
-            Paragraph S = new Paragraph();
-            this.Successors.add(S);
-            S.subsection_number=this.Successors.size();
-            S.name = Name;
-        }
+    public void AddSuccessor(Section pSection){
+        this.Successors.add(pSection);
+
     }
     public void DeleteSuccessor(int index){
         this.Successors.remove(index-1);
