@@ -21,7 +21,8 @@ import java.util.Iterator;
 public class DB
 {
     OrientDB Database;
-    boolean ClassNotCreated = true;
+    public String Login;
+    public String Password;
 
     public DB(){
         Database = null;
@@ -29,6 +30,8 @@ public class DB
 
     public boolean Connection(String URL,String Login,String Password){
         boolean Connection_established;
+        this.Login = Login;
+        this.Password = Password;
         StackTraceElement[] tab = null;
         try{
 

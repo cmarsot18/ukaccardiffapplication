@@ -15,7 +15,7 @@ public class Document_Display extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle(root.Getname());
         JTree Document = new JTree(displaydocument(root));
-        Document.setRootVisible(false);
+        //Document.setRootVisible(false);
         this.getContentPane().add(new JScrollPane(Document));
         this.setVisible(true);
 

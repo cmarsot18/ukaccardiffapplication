@@ -1,5 +1,6 @@
 package Windows;
 
+import DB.DB;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,8 +13,10 @@ public class Open_Create extends JFrame implements ActionListener
     private JButton Open = new JButton("Open a document");
     private JButton New = new JButton(("Create a document"));
     private  JPanel pan = new JPanel();
+    public DB Current_Server;
 
-    public Open_Create(){
+    public Open_Create(DB pDB){
+        this.Current_Server = pDB;
         this.setSize(300,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,10 +37,12 @@ public class Open_Create extends JFrame implements ActionListener
     }
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Open){
-            System.out.print("Open ");
+            new Document_Select(this.Current_Server);
+            this.dispose();
         }
         if(a.getSource() == New){
-            System.out.print("New ");
+            new Doc_Creation();
+            this.dispose();
         }
 
     }

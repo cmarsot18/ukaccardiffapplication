@@ -1,5 +1,6 @@
 package Windows;
 
+import Document.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,9 @@ public class Doc_Creation extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent a){
-        System.out.print(Name.getText());
+        Section NewDoc = new Section();
+        NewDoc.SetName(this.Name.getText());
+        new Document_Display(NewDoc);
+        this.dispose();
     }
 }

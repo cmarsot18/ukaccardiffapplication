@@ -68,25 +68,26 @@ public class test{
         text3.setR("r3");
         text3.setS("s3");
         text3.setText("rase3");
-        DB test= new DB();
-        boolean Connection = test.Connection("remote:localhost","root","password");
-        test.getDatabase().drop("doc");
-        test.getDatabase().drop("DocBis");
-        if (Connection){
-            test.SaveNewDocument(root,"admin","admin");
-            Section load = test.LoadDocument("doc","admin","admin");
-            load.SetName("DocBis");
-            test.SaveNewDocument(load,"admin","admin");
-        }else{
-            System.out.println("fail");
-        }
+//        DB test= new DB();
+//        boolean Connection = test.Connection("remote:localhost","root","password");
+//        if(test.getDatabase().exists("doc")){
+//            test.getDatabase().drop("doc");
+//            test.getDatabase().drop("DocBis");
+//        }
+//        if (Connection){
+//            test.SaveNewDocument(root,"admin","admin");
+//            Section load = test.LoadDocument("doc","admin","admin");
+//            load.SetName("DocBis");
+//            new Document_Display(load);
+//            test.SaveNewDocument(load,"admin","admin");
+//        }else{
+//            System.out.println("fail");
+//        }
 
-
-//    new Document_Display(root);
+//        new Document_Display(root);
 //    new Doc_Creation();
-//    new Open_Create();
-//    new Connection();
-        new Document_Select(test);
+    new Connection();
+//        new Document_Select(test);
 
 
 

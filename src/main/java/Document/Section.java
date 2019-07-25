@@ -14,8 +14,8 @@ public class Section
 
     public Section(){
         name = "None";
-        subsection_number = -1;
-        Successors=new ArrayList<Section>();
+        subsection_number = 0;
+        Successors = new ArrayList<Section>();
     }
 
     public Section(String pName,Section pPredecessor, ArrayList<Section> pSuccessors){
@@ -58,7 +58,7 @@ public class Section
 
     public void AddSuccessor(Section pSection){
         this.Successors.add(pSection);
-        pSection.SetSubsectionNumber(this.Successors.size()-1);
+        pSection.SetSubsectionNumber(this.Successors.size());
 
     }
     public void DeleteSuccessor(int index){

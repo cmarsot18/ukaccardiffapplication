@@ -1,6 +1,7 @@
 package Windows;
 
 import Document.Paragraph;
+import DB.DB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class Connection extends JFrame implements ActionListener {
     private JLabel UserLabel = new JLabel("User :");
     private  JLabel PasswordLabel = new JLabel("Password :");
     private JLabel ServerLabel = new JLabel("Server :");
+    private boolean Connected;
+    public DB Current_Server = new DB();
 
     public Connection(){
         this.setSize(500,300);
@@ -41,9 +44,15 @@ public class Connection extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent a){
-        System.out.println(server.getText());
-        System.out.println(password.getPassword());
-        System.out.println(user.getText());
+        Connected=Current_Server.Connection(server.getText(),user.getText(),password.getPassword().toString());
+        if(Connected){
+            new Open_Create(this.Current_Server);
+            this.dispose();
+        }else{
+            JOptionPane jop3 = new JOptionPane();
+            jop3.showMessageDialog(null, "Can`t access to the server", "Connection Fqilure", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
 }
