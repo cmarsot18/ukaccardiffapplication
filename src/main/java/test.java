@@ -79,7 +79,10 @@ public class test{
 //        }
 
 
-    new Document_Display(root);
+    //new Document_Display(root);
+    //new Doc_Creaction();
+    //new Open_Create();
+    new Connection();
 
 
 
