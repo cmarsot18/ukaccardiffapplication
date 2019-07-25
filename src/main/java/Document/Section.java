@@ -58,6 +58,7 @@ public class Section
 
     public void AddSuccessor(Section pSection){
         this.Successors.add(pSection);
+        pSection.SetSubsectionNumber(this.Successors.size()-1);
 
     }
     public void DeleteSuccessor(int index){

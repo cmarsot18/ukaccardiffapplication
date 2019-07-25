@@ -44,7 +44,9 @@ public class DB
             return Connection_established;
         }
     }
-
+    public OrientDB getDatabase(){
+        return this.Database;
+    }
     public void SaveNewDocument(Section root,String Login,String Password){
         this.Database.create(root.Getname(),ODatabaseType.PLOCAL);
         ODatabaseDocument document = Database.open(root.Getname(),Login,Password);

@@ -1,0 +1,56 @@
+package Windows;
+
+import com.orientechnologies.orient.core.db.OrientDB;
+import DB.DB;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+
+public class Document_Select extends JFrame implements ActionListener {
+
+    private JButton Select = new JButton("Select this document");
+    private JComboBox Existing_DB = new JComboBox();
+    private JPanel pan = new JPanel();
+    public String Document_Name;
+
+    public Document_Select(DB pDB){
+        this.setSize(500, 75);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        Select.addActionListener(this);
+        Existing_DB.addItemListener(new ItemState());
+        pan.setBackground(Color.LIGHT_GRAY);
+        pan.setLayout(new GridLayout(1,2));
+        Existing_DB.setPreferredSize(new Dimension(200,75));
+        List<String> temp = pDB.getDatabase().list();
+        Iterator<String> I = temp.iterator();
+        String stemp;
+        while(I.hasNext()){
+            stemp =I.next();
+            Existing_DB.addItem(stemp);
+        }
+        pan.add(Existing_DB);
+        pan.add(Select);
+        this.setContentPane(pan);
+        this.setVisible(true);
+
+
+    }
+    private class ItemState implements ItemListener{
+        public void itemStateChanged(ItemEvent e){
+            Document_Name = Existing_DB.getSelectedItem().toString();
+        }
+    }
+
+    public void actionPerformed(ActionEvent a){
+        System.out.println(Document_Name);
+    }
+}
