@@ -1,16 +1,8 @@
+import Document.Paragraph;
+import Document.Section;
+import Windows.*;
 import DB.DB;
-import Document.*;
-import Window200x400.*;
-import com.orientechnologies.orient.core.db.OrientDB;
-import com.orientechnologies.orient.core.Orient;
-import com.orientechnologies.orient.core.db.ODatabase;
-import com.orientechnologies.orient.core.db.ODatabaseType;
-import com.orientechnologies.orient.core.db.OrientDB;
-import com.orientechnologies.orient.core.db.OrientDBConfig;
-import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
-import com.orientechnologies.orient.core.metadata.schema.OClass;
-import com.orientechnologies.orient.core.record.OEdge;
-import com.orientechnologies.orient.core.record.OVertex;
+
 import java.util.ArrayList;
 
 
@@ -76,18 +68,26 @@ public class test{
         text3.setR("r3");
         text3.setS("s3");
         text3.setText("rase3");
-        DB test= new DB();
-        boolean Connection = test.Connection("remote:localhost","root","password");
-        if (Connection){
-            test.SaveNewDocument(root,"admin","admin");
-            Section load = test.LoadDocument("doc","admin","admin");
-            load.SetName("DocBis");
-            test.SaveNewDocument(load,"admin","admin");
-        }else{
-            System.out.println("fail");
-        }
+//        DB test= new DB();
+//        boolean Connection = test.Connection("remote:localhost","root","password");
+//        if(test.getDatabase().exists("doc")){
+//            test.getDatabase().drop("doc");
+//            test.getDatabase().drop("DocBis");
+//        }
+//        if (Connection){
+//            test.SaveNewDocument(root,"admin","admin");
+//            Section load = test.LoadDocument("doc","admin","admin");
+//            load.SetName("DocBis");
+//            new Document_Display(load);
+//            test.SaveNewDocument(load,"admin","admin");
+//        }else{
+//            System.out.println("fail");
+//        }
 
-
+        new Document_Display(root);
+//    new Doc_Creation();
+    //new Connection();
+//        new Document_Select(test);
 
 
 

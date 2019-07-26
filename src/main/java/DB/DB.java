@@ -21,7 +21,8 @@ import java.util.Iterator;
 public class DB
 {
     OrientDB Database;
-    boolean ClassNotCreated = true;
+    public String Login;
+    public String Password;
 
     public DB(){
         Database = null;
@@ -29,6 +30,8 @@ public class DB
 
     public boolean Connection(String URL,String Login,String Password){
         boolean Connection_established;
+        this.Login = Login;
+        this.Password = Password;
         StackTraceElement[] tab = null;
         try{
 
@@ -44,7 +47,9 @@ public class DB
             return Connection_established;
         }
     }
-
+    public OrientDB getDatabase(){
+        return this.Database;
+    }
     public void SaveNewDocument(Section root,String Login,String Password){
         this.Database.create(root.Getname(),ODatabaseType.PLOCAL);
         ODatabaseDocument document = Database.open(root.Getname(),Login,Password);
@@ -99,7 +104,7 @@ public class DB
     public Section VertexToSection(OVertex pVertex){
         Iterable<OVertex> Successors=pVertex.getVertices(ODirection.OUT);
         String temp = pVertex.getProperty("@class").toString();
-        if(temp.equals("Paragraph")){
+        if(temp.equals("Section")){
             Section stemp = new Section();
             temp = pVertex.getProperty("name").toString();
             stemp.SetName(temp);
@@ -108,6 +113,7 @@ public class DB
                 OVertex vtemp = I.next();
                 Section stemp2 = this.VertexToSection(vtemp);
                 stemp2.SetPredecessor(stemp);
+                stemp.AddSuccessor(stemp2);
             }
             return stemp;
         }else{
@@ -120,9 +126,9 @@ public class DB
             ptemp.setA(temp);
             temp = pVertex.getProperty("S").toString();
             ptemp.setS(temp);
-            temp = pVertex.getProperty("S").toString();
-            ptemp.setE(temp);
             temp = pVertex.getProperty("E").toString();
+            ptemp.setE(temp);
+            temp = pVertex.getProperty("Text").toString();
             ptemp.setText(temp);
             return ptemp;
         }
