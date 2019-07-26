@@ -17,6 +17,8 @@ public class Document_Display extends JFrame implements ActionListener {
     private JButton Commit = new JButton("Commit");
     private JButton New_Section = new JButton("New Section");
     private JButton New_Paragraph = new JButton("New paragraph");
+    private  JTree Document = new JTree();
+    public Section root = new Section();
 
 
     public Document_Display(Section root){
@@ -26,7 +28,8 @@ public class Document_Display extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle(root.Getname());
-        final JTree Document = new JTree(displaydocument(root));
+        this.root = root;
+        Document = new JTree(displaydocument(root));
         JPanel pan = new JPanel();
         JPanel pan2 = new JPanel();
         pan.setLayout(new BorderLayout());
@@ -34,6 +37,9 @@ public class Document_Display extends JFrame implements ActionListener {
         pan2.add(Commit);
         pan2.add(New_Section);
         pan2.add(New_Paragraph);
+        Commit.addActionListener(this);
+        New_Paragraph.addActionListener(this);
+        New_Section.addActionListener(this);
         pan.add(pan2,BorderLayout.NORTH);
         pan.add(Document,BorderLayout.CENTER);
         Document.addTreeSelectionListener(new TreeSelectionListener() {
@@ -77,10 +83,23 @@ public class Document_Display extends JFrame implements ActionListener {
 
         }
         if(a.getSource() == New_Section){
+            TreePath path = Document.getSelectionPath();
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+            System.out.println(selectedNode.toString());
+            selectedNode.add(new DefaultMutableTreeNode("test"));
+            this.setVisible(false);
+            this.setVisible(true);
 
         }
         if(a.getSource() == New_Paragraph){
+            TreePath path = Document.getSelectionPath();
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+            System.out.println(selectedNode.toString());
+            selectedNode.add(new DefaultMutableTreeNode("test2"));
+            this.setVisible(false);
+            this.setVisible(true);
 
         }
     }
+    public Section getRoot(){return this.root;}
 }
