@@ -13,7 +13,7 @@ public class Open_Create extends JFrame implements ActionListener
     private JButton Open = new JButton("Open a document");
     private JButton New = new JButton(("Create a document"));
     private  JPanel pan = new JPanel();
-    public DB Current_Server;
+    private DB Current_Server;
 
     public Open_Create(DB pDB){
         this.Current_Server = pDB;

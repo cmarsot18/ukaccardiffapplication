@@ -32,12 +32,14 @@ public class DB
         boolean Connection_established;
         this.Login = Login;
         this.Password = Password;
+        System.out.println(Login+":"+Password);
         StackTraceElement[] tab = null;
         try{
 
             Database = new OrientDB(URL,Login,Password,OrientDBConfig.defaultConfig());
         }catch(Exception e){
             tab = e.getStackTrace();
+            System.out.println(tab);
         }
         if(tab == null){
             Connection_established = true;
@@ -53,6 +55,7 @@ public class DB
     public void SaveNewDocument(Section root,String Login,String Password){
         this.Database.create(root.Getname(),ODatabaseType.PLOCAL);
         ODatabaseDocument document = Database.open(root.Getname(),Login,Password);
+
         OClass Section = document.createVertexClass("Section");
         OClass Paragraph = document.createVertexClass("Paragraph");
         SectionToVertex(root,document,Paragraph,Section);

@@ -19,7 +19,6 @@ public class Connection extends JFrame implements ActionListener {
     private JLabel UserLabel = new JLabel("User :");
     private  JLabel PasswordLabel = new JLabel("Password :");
     private JLabel ServerLabel = new JLabel("Server :");
-    private boolean Connected;
     public DB Current_Server = new DB();
 
     public Connection(){
@@ -44,7 +43,7 @@ public class Connection extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent a){
-        Connected=Current_Server.Connection(server.getText(),user.getText(),password.getPassword().toString());
+        boolean Connected=Current_Server.Connection(server.getText(),user.getText(),String.valueOf(password.getPassword()));
         if(Connected){
             new Open_Create(this.Current_Server);
             this.dispose();

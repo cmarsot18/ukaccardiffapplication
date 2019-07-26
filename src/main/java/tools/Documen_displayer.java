@@ -1,4 +1,6 @@
 package tools;
 
-public class Documen_displayer {
+public class Documen_displayer
+{
+
 }

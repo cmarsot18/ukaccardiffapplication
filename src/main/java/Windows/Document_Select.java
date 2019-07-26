@@ -32,9 +32,7 @@ public class Document_Select extends JFrame implements ActionListener {
         pan.setBackground(Color.LIGHT_GRAY);
         pan.setLayout(new GridLayout(1,2));
         Existing_DB.setPreferredSize(new Dimension(200,75));
-        System.out.println("oh");
         List<String> temp = Current_server.getDatabase().list();
-        System.out.println("oh");
         Iterator<String> I = temp.iterator();
         String stemp;
         while(I.hasNext()){
