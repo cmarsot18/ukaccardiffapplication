@@ -41,7 +41,7 @@ public class Open_Create extends JFrame implements ActionListener
             this.dispose();
         }
         if(a.getSource() == New){
-            new Doc_Creation();
+            new Doc_Creation(this.Current_Server);
             this.dispose();
         }
 

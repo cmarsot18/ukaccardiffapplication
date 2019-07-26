@@ -1,7 +1,7 @@
 package Document;
 
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 
@@ -85,6 +85,50 @@ public class Section
         for(i=IndexTo+1;i <= max; i++){
             S = Successors.get(i);
             S.SetSubsectionNumber(S.GetSubsectionNumber()+1);
+        }
+    }
+
+    public Section GetSectionFromRoot(String Path){
+        ArrayList<String> Predecessors = new ArrayList<String>();
+        int max = Path.length();
+        int i = 0;
+        int j;
+        while(i<max) {
+            j = Path.indexOf(".", i);
+            i = Path.indexOf("<%>", i);
+            String temp = Path.substring(j + 1, i );
+            i = i+3;
+            Predecessors.add(temp);
+        }
+        Iterator<String> I = Predecessors.iterator();
+        I.next();
+        String stemp = I.next();
+        Section stemp2 = this.SearchInSuccessors(stemp);
+        while (I.hasNext()){
+            stemp = I.next();
+            stemp2= stemp2.SearchInSuccessors(stemp);
+        }
+        return stemp2;
+    }
+
+    public Section SearchInSuccessors(String Name){
+        Iterator<Section> I = this.Successors.iterator();
+        Section res = new Section();
+        while (I.hasNext()){
+            Section temp = I.next();
+            if(Name.equals(temp.Getname())){
+                res = temp;
+            }
+        }
+        return res;
+
+    }
+    public void PrintSuccessors(){
+        Iterator<Section> I = this.Successors.iterator();
+        while (I.hasNext()){
+            Section temp = I.next();
+            System.out.println(temp.Getname());
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package Windows;
 
+import DB.DB;
 import Document.*;
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +12,11 @@ public class Doc_Creation extends JFrame implements ActionListener {
     private JButton Create = new JButton("Create");
     private JPanel pan = new JPanel();
     private JTextField Name = new JTextField();
+    private DB Current_Server;
 
 
-    public Doc_Creation() {
+    public Doc_Creation(DB pDB) {
+        this.Current_Server = pDB;
         this.setSize(500, 75);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +34,7 @@ public class Doc_Creation extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent a){
         Section NewDoc = new Section();
         NewDoc.SetName(this.Name.getText());
-        new Document_Display(NewDoc);
+        new Document_Display(NewDoc,Current_Server);
         this.dispose();
     }
 }

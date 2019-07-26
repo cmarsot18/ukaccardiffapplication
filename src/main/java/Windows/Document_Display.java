@@ -1,5 +1,6 @@
 package Windows;
 
+import DB.DB;
 import Document.Paragraph;
 import Document.Section;
 
@@ -17,11 +18,16 @@ public class Document_Display extends JFrame implements ActionListener {
     private JButton Commit = new JButton("Commit");
     private JButton New_Section = new JButton("New Section");
     private JButton New_Paragraph = new JButton("New paragraph");
-    private  JTree Document = new JTree();
-    public Section root = new Section();
+    private  JButton Editing = new JButton("Edit Selection");
+    private  JTree Document;
+    public Section root;
+    private String selected;
+    private JPanel pan = new JPanel();
+    private JPanel pan2 = new JPanel();
+    private DB Current_Server;
 
-
-    public Document_Display(Section root){
+    public Document_Display(Section root,DB pDB){
+        this.Current_Server = pDB;
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,13 +36,13 @@ public class Document_Display extends JFrame implements ActionListener {
         this.setTitle(root.Getname());
         this.root = root;
         Document = new JTree(displaydocument(root));
-        JPanel pan = new JPanel();
-        JPanel pan2 = new JPanel();
         pan.setLayout(new BorderLayout());
-        pan2.setLayout(new GridLayout(1,3));
+        pan2.setLayout(new GridLayout(1,4));
         pan2.add(Commit);
         pan2.add(New_Section);
         pan2.add(New_Paragraph);
+        pan2.add(Editing);
+        Editing.addActionListener(this);
         Commit.addActionListener(this);
         New_Paragraph.addActionListener(this);
         New_Section.addActionListener(this);
@@ -45,19 +51,19 @@ public class Document_Display extends JFrame implements ActionListener {
         Document.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 if(Document.getLastSelectedPathComponent() != null){
-                    System.out.println(getAbsolutePath(e.getPath()));
+                    selected = getAbsolutePath(e.getPath());
+                    System.out.println(selected);
                 }
             }
             private String getAbsolutePath(TreePath treePath){
                 String str = "";
                 for(Object name : treePath.getPath()){
                     if(name.toString() != null)
-                        str += name.toString()+" > ";
+                        str += name.toString()+"<%>";
                 }
                 return str;
             }
         });
-        //Document.setRootVisible(false);
         this.setContentPane(pan);
         this.setVisible(true);
 
@@ -80,26 +86,42 @@ public class Document_Display extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Commit){
-
+            if(Current_Server.getDatabase().exists(this.root.Getname())){
+                Current_Server.getDatabase().drop(this.root.Getname());
+            }
+            Current_Server.SaveNewDocument(root,"admin","admin");
+            JOptionPane jop3 = new JOptionPane();
+            jop3.showMessageDialog(null, "Successfully saved", "Save", JOptionPane.INFORMATION_MESSAGE);
         }
         if(a.getSource() == New_Section){
-            TreePath path = Document.getSelectionPath();
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-            System.out.println(selectedNode.toString());
-            selectedNode.add(new DefaultMutableTreeNode("test"));
-            this.setVisible(false);
-            this.setVisible(true);
-
+            JOptionPane jop = new JOptionPane();
+            String name = jop.showInputDialog(null, "Enter the name of the section", "New Section", JOptionPane.QUESTION_MESSAGE);
+            Section New = new Section();
+            New.SetName(name);
+            Section Predecessor = root.GetSectionFromRoot(selected);
+            Predecessor.AddSuccessor(New);
+            this.repaint();
+            pan.repaint();
         }
         if(a.getSource() == New_Paragraph){
-            TreePath path = Document.getSelectionPath();
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-            System.out.println(selectedNode.toString());
-            selectedNode.add(new DefaultMutableTreeNode("test2"));
-            this.setVisible(false);
-            this.setVisible(true);
+            JOptionPane jop = new JOptionPane();
+            String name = jop.showInputDialog(null, "Enter the name of the paragraph", "New Paragraph", JOptionPane.QUESTION_MESSAGE);
+            Section New = new Paragraph();
+            New.SetName(name);
+            Section Predecessor = root.GetSectionFromRoot(selected);
+            Predecessor.AddSuccessor(New);
+            new Document_Display(root,this.Current_Server);
+        }
+        if(a.getSource() == Editing){
+            Section Selected = root.GetSectionFromRoot(selected);
+            if(Selected instanceof Paragraph){
+
+            }else{
+                JOptionPane jop = new JOptionPane();
+                String name = jop.showInputDialog(null, "Enter the new name of the section", "Rename", JOptionPane.QUESTION_MESSAGE);
+                Selected.SetName(name);
+            }
 
         }
     }
-    public Section getRoot(){return this.root;}
 }

@@ -14,8 +14,7 @@ import com.orientechnologies.orient.core.record.ODirection;
 import com.orientechnologies.orient.core.record.OEdge;
 import com.orientechnologies.orient.core.record.OVertex;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
-
-import java.util.Iterator;
+import java.util.*;
 
 
 public class DB

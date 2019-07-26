@@ -53,7 +53,7 @@ public class Document_Select extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent a){
-        new Document_Display(Current_server.LoadDocument(Document_Name,"root","password"));
+        new Document_Display(Current_server.LoadDocument(Document_Name,"root","password"),Current_server);
         this.dispose();
     }
 }

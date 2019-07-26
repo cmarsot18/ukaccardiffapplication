@@ -12,9 +12,9 @@ import javax.swing.JFrame;
 
 public class Connection extends JFrame implements ActionListener {
     private JButton log = new JButton("Log in");
-    private JTextField user = new JTextField();
-    private  JPasswordField password = new JPasswordField();
-    private JTextField server = new JTextField();
+    private JTextField user = new JTextField("root");
+    private  JPasswordField password = new JPasswordField("password");
+    private JTextField server = new JTextField("remote:localhost");
     private JPanel pan = new JPanel();
     private JLabel UserLabel = new JLabel("User :");
     private  JLabel PasswordLabel = new JLabel("Password :");
