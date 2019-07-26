@@ -84,9 +84,9 @@ public class test{
 //            System.out.println("fail");
 //        }
 
-//        new Document_Display(root);
+        new Document_Display(root);
 //    new Doc_Creation();
-    new Connection();
+    //new Connection();
 //        new Document_Select(test);
 
 
