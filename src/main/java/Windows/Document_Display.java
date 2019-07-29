@@ -3,7 +3,6 @@ package Windows;
 import DB.DB;
 import Document.Paragraph;
 import Document.Section;
-
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -70,7 +69,7 @@ public class Document_Display extends JFrame implements ActionListener {
     }
 
     private static DefaultMutableTreeNode displaydocument(Section pSection){
-        if (pSection instanceof Paragraph){
+        if (pSection.GetSuccessors().isEmpty()){
             DefaultMutableTreeNode temp = new DefaultMutableTreeNode(pSection.GetSubsectionNumber()+"."+pSection.Getname());
             return temp;
         }else{
@@ -81,6 +80,16 @@ public class Document_Display extends JFrame implements ActionListener {
                 temp.add(displaydocument(stemp));
             }
             return temp;
+        }
+    }
+
+    private void expandAllNodes(JTree tree) {
+        int j = tree.getRowCount();
+        int i = 0;
+        while(i < j) {
+            tree.expandRow(i);
+            i += 1;
+            j = tree.getRowCount();
         }
     }
 
@@ -100,17 +109,70 @@ public class Document_Display extends JFrame implements ActionListener {
             New.SetName(name);
             Section Predecessor = root.GetSectionFromRoot(selected);
             Predecessor.AddSuccessor(New);
-            this.repaint();
-            pan.repaint();
+            pan.removeAll();
+            pan.updateUI();
+            Document = new JTree(displaydocument(root));
+            this.expandAllNodes(Document);
+            Document.addTreeSelectionListener(new TreeSelectionListener() {
+                public void valueChanged(TreeSelectionEvent e) {
+                    if(Document.getLastSelectedPathComponent() != null){
+                        selected = getAbsolutePath(e.getPath());
+                        System.out.println(selected);
+                    }
+                }
+                private String getAbsolutePath(TreePath treePath){
+                    String str = "";
+                    for(Object name : treePath.getPath()){
+                        if(name.toString() != null)
+                            str += name.toString()+"<%>";
+                    }
+                    return str;
+                }
+            });
+            pan2.add(Commit);
+            pan2.add(New_Section);
+            pan2.add(New_Paragraph);
+            pan2.add(Editing);
+            pan.add(pan2,BorderLayout.NORTH);
+            pan.add(Document,BorderLayout.CENTER);
+            pan.updateUI();
+
+
         }
-        if(a.getSource() == New_Paragraph){
+        if(a.getSource() == New_Paragraph) {
             JOptionPane jop = new JOptionPane();
             String name = jop.showInputDialog(null, "Enter the name of the paragraph", "New Paragraph", JOptionPane.QUESTION_MESSAGE);
-            Section New = new Paragraph();
+            Paragraph New = new Paragraph();
             New.SetName(name);
             Section Predecessor = root.GetSectionFromRoot(selected);
             Predecessor.AddSuccessor(New);
-            new Document_Display(root,this.Current_Server);
+            pan.removeAll();
+            pan.updateUI();
+            Document = new JTree(displaydocument(root));
+            this.expandAllNodes(Document);
+            Document.addTreeSelectionListener(new TreeSelectionListener() {
+                public void valueChanged(TreeSelectionEvent e) {
+                    if(Document.getLastSelectedPathComponent() != null){
+                        selected = getAbsolutePath(e.getPath());
+                        System.out.println(selected);
+                    }
+                }
+                private String getAbsolutePath(TreePath treePath){
+                    String str = "";
+                    for(Object name : treePath.getPath()){
+                        if(name.toString() != null)
+                            str += name.toString()+"<%>";
+                    }
+                    return str;
+                }
+            });
+            pan2.add(Commit);
+            pan2.add(New_Section);
+            pan2.add(New_Paragraph);
+            pan2.add(Editing);
+            pan.add(pan2, BorderLayout.NORTH);
+            pan.add(Document, BorderLayout.CENTER);
+            pan.updateUI();
         }
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
