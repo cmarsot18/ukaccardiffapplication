@@ -49,9 +49,8 @@ public class Connection extends JFrame implements ActionListener {
             this.dispose();
         }else{
             JOptionPane jop3 = new JOptionPane();
-            jop3.showMessageDialog(null, "Can`t access to the server", "Connection Fqilure", JOptionPane.ERROR_MESSAGE);
+            jop3.showMessageDialog(null, "Can`t access to the server", "Connection Failure", JOptionPane.ERROR_MESSAGE);
 
         }
     }
-
 }

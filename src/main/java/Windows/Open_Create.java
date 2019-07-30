@@ -17,7 +17,7 @@ public class Open_Create extends JFrame implements ActionListener
 
     public Open_Create(DB pDB){
         this.Current_Server = pDB;
-        this.setSize(300,500);
+        this.setSize(500,75);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -25,14 +25,10 @@ public class Open_Create extends JFrame implements ActionListener
         Open.addActionListener(this);
         New.addActionListener(this);
         pan.setBackground(Color.LIGHT_GRAY);
-        pan.setLayout(new BorderLayout());
-        JPanel pan2 = new JPanel();
-        pan2.setLayout(new GridLayout(3,1));
-        pan2.add(Open);
-        pan.add(new JLabel(""));
-        pan2.add(New);
-        pan.add(pan2,BorderLayout.CENTER);
-        this.setContentPane(pan2);
+        pan.setLayout(new GridLayout(1,2));
+        pan.add(Open);
+        pan.add(New);
+        this.setContentPane(pan);
         this.setVisible(true);
     }
     public void actionPerformed(ActionEvent a){

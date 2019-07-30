@@ -24,6 +24,7 @@ public class Section
         Successors=pSuccessors;
         Predecessor = pPredecessor;
     }
+
     public String Getname(){
         return name;
     }
@@ -61,17 +62,17 @@ public class Section
         pSection.SetSubsectionNumber(this.Successors.size());
 
     }
+
     public void DeleteSuccessor(int index){
         this.Successors.remove(index-1);
         int i;
         int max=Successors.size()-1;
-        for (i= index; i <= max; i++){
+        for (i= index-1; i <= max; i++){
             Section S = this.Successors.get(i);
             S.SetSubsectionNumber(S.GetSubsectionNumber()-1);
         }
-
-
     }
+
     public void MoveSuccessor(int indexFrom,int IndexTo) {
         Section S = this.Successors.get(indexFrom-1);
         this.Successors.remove(indexFrom-1);
@@ -89,26 +90,30 @@ public class Section
     }
 
     public Section GetSectionFromRoot(String Path){
-        ArrayList<String> Predecessors = new ArrayList<String>();
-        int max = Path.length();
-        int i = 0;
-        int j;
-        while(i<max) {
-            j = Path.indexOf(".", i);
-            i = Path.indexOf("<%>", i);
-            String temp = Path.substring(j + 1, i );
-            i = i+3;
-            Predecessors.add(temp);
+        if((Path.indexOf("<%>")+4)>Path.length()){
+            return this;
+        }else{
+            ArrayList<String> Predecessors = new ArrayList<String>();
+            int max = Path.length();
+            int i = 0;
+            int j;
+            while (i < max) {
+                j = Path.indexOf(".", i);
+                i = Path.indexOf("<%>", i);
+                String temp = Path.substring(j + 1, i);
+                i = i + 3;
+                Predecessors.add(temp);
+            }
+            Iterator<String> I = Predecessors.iterator();
+            I.next();
+            String stemp = I.next();
+            Section stemp2 = this.SearchInSuccessors(stemp);
+            while (I.hasNext()) {
+                stemp = I.next();
+                stemp2 = stemp2.SearchInSuccessors(stemp);
+            }
+            return stemp2;
         }
-        Iterator<String> I = Predecessors.iterator();
-        I.next();
-        String stemp = I.next();
-        Section stemp2 = this.SearchInSuccessors(stemp);
-        while (I.hasNext()){
-            stemp = I.next();
-            stemp2= stemp2.SearchInSuccessors(stemp);
-        }
-        return stemp2;
     }
 
     public Section SearchInSuccessors(String Name){
@@ -123,6 +128,12 @@ public class Section
         return res;
 
     }
+
+    public void DeleteSection(){
+        System.out.println(this.GetSubsectionNumber());
+        this.GetPredecessor().DeleteSuccessor(this.GetSubsectionNumber());
+    }
+
     public void PrintSuccessors(){
         Iterator<Section> I = this.Successors.iterator();
         while (I.hasNext()){
