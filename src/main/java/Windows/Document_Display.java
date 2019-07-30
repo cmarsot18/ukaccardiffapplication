@@ -9,10 +9,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class Document_Display extends JFrame implements ActionListener {
 
@@ -32,7 +29,7 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean saved;
 
 
-    public Document_Display(Section root,DB pDB){
+    public Document_Display(Section root, final DB pDB){
         this.name_changed = false;
         this.saved = false;
         this.opening_name = root.Getname();
@@ -73,6 +70,7 @@ public class Document_Display extends JFrame implements ActionListener {
                             JOptionPane.QUESTION_MESSAGE);
                     if(reponse == JOptionPane.YES_OPTION ){
                         dispose();
+                        new Open_Create(Current_Server);
                     }
                 }
             }

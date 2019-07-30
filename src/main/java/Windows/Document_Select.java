@@ -2,14 +2,12 @@ package Windows;
 
 import com.orientechnologies.orient.core.db.OrientDB;
 import DB.DB;
+
+import java.awt.event.*;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 
 public class Document_Select extends JFrame implements ActionListener {
@@ -24,9 +22,16 @@ public class Document_Select extends JFrame implements ActionListener {
         this.Current_server = pDB;
         this.setSize(500, 75);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new Open_Create(Current_server);
+            }
+        });
         Select.addActionListener(this);
         Existing_DB.addItemListener(new ItemState());
         pan.setBackground(Color.LIGHT_GRAY);

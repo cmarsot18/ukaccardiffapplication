@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Doc_Creation extends JFrame implements ActionListener {
 
@@ -19,7 +21,7 @@ public class Doc_Creation extends JFrame implements ActionListener {
         this.Current_Server = pDB;
         this.setSize(500, 75);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         Create.addActionListener(this);
@@ -27,6 +29,13 @@ public class Doc_Creation extends JFrame implements ActionListener {
         pan.setBackground(Color.LIGHT_GRAY);
         pan.add(Name);
         pan.add(Create);
+        this.addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new Open_Create(Current_Server);
+            }
+        });
         this.setTitle("Enter the name of the new document");
         this.setContentPane(pan);
         this.setVisible(true);
