@@ -25,23 +25,30 @@ import java.awt.event.WindowEvent;
 import static javafx.application.Platform.runLater;
 
 
-public class Text_Editor{
+public class Text_Editor extends JFrame implements ActionListener{
 
     private String htmltext;
+    private boolean open;
+    private JButton save = new JButton("Save");
+    private HTMLEditor html;
 
     private  HTMLEditor init(){
-        JFrame frame = new JFrame("HTML Editor");
+        this.open = true;
         final JFXPanel fxPanel = new JFXPanel();
-        frame.add(fxPanel);
-        frame.setSize(1200, 800);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.add(save,BorderLayout.NORTH);
+        save.addActionListener(this);
+        this.add(fxPanel,BorderLayout.CENTER);
+        this.setSize(1200, 800);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         final HTMLEditor htmlEditor = new HTMLEditor();
-        frame.addWindowListener(new WindowAdapter() {
+        this.addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent e) {
-                htmltext = htmlEditor.getHtmlText();
-                frame.dispose();
+                html = htmlEditor;
+                open = false;
+                dispose();
             }
         });
 
@@ -65,6 +72,11 @@ public class Text_Editor{
         });
     }
     public String getHtmltext(){return htmltext;}
+
+    public boolean Open(){return this.open; }
+    public void actionPerformed(ActionEvent a){
+        htmltext = html.getHtmlText();
+    }
 
 
 }

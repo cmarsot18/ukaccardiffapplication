@@ -31,6 +31,7 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean name_changed;
     private String opening_name;
     private boolean saved;
+    private boolean TextEditorOpen;
 
 
     public Document_Display(Section root, final DB pDB){
@@ -190,11 +191,21 @@ public class Document_Display extends JFrame implements ActionListener {
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
-                Text_Editor test =  new Text_Editor();
-                String[] args = new String[] {"123"};
-                test.main(args);
-                String temp = test.getHtmltext();
-                System.out.println(temp);
+                if(TextEditorOpen){
+                    JOptionPane jop3 = new JOptionPane();
+                    jop3.showMessageDialog(null, "An editor is already open, close it then try again", "Editor open", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    this.TextEditorOpen = true;
+                    Text_Editor test = new Text_Editor();
+                    String[] args = new String[]{"123"};
+                    test.main(args);
+                    String temp = new String();
+                    while (test.Open()) {
+                    }
+                    temp = test.getHtmltext();
+                    System.out.println(args);
+//                    this.TextEditorOpen = false;
+                }
 
             }else{
                 JOptionPane jop = new JOptionPane();
