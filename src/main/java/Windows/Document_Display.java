@@ -10,7 +10,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.*;
-import javafx.scene.web.HTMLEditor;
+import Windows.Text_Editor;
+import javafx.stage.Stage;
+
 
 public class Document_Display extends JFrame implements ActionListener {
 
@@ -103,7 +105,6 @@ public class Document_Display extends JFrame implements ActionListener {
             public void valueChanged(TreeSelectionEvent e) {
                 if(Document.getLastSelectedPathComponent() != null){
                     selected = getAbsolutePath(e.getPath());
-                    System.out.println(selected);
                 }
             }
             private String getAbsolutePath(TreePath treePath){
@@ -116,6 +117,7 @@ public class Document_Display extends JFrame implements ActionListener {
             }
         });
     }
+
     private void expandAllNodes(JTree tree) {
         int j = tree.getRowCount();
         int i = 0;
@@ -125,6 +127,7 @@ public class Document_Display extends JFrame implements ActionListener {
             j = tree.getRowCount();
         }
     }
+
     private void refresh(){
         pan.removeAll();
         pan.updateUI();
@@ -187,16 +190,20 @@ public class Document_Display extends JFrame implements ActionListener {
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
-                Text_Editor edit = new Text_Editor();
+                Text_Editor test =  new Text_Editor();
+                String[] args = new String[] {"123"};
+                test.main(args);
 
             }else{
                 JOptionPane jop = new JOptionPane();
                 String name = jop.showInputDialog(null, "Enter the new name of the section", "Rename", JOptionPane.QUESTION_MESSAGE);
-                if(Selected == root){
-                    name_changed = true;
-                    Selected.SetName(name);
-                }else{
-                    Selected.SetName(name);
+                if(name != null) {
+                    if (Selected == root) {
+                        name_changed = true;
+                        Selected.SetName(name);
+                    } else {
+                        Selected.SetName(name);
+                    }
                 }
             }
             this.refresh();
