@@ -24,6 +24,17 @@
                 <artifactId>javafx-swing</artifactId>
                 <version>11-ea+24</version>
             </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx</artifactId>
+                <version>11</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-web</artifactId>
+                <version>11</version>
+            </dependency>
 
         </dependencies>
 

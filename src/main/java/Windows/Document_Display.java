@@ -10,8 +10,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.*;
+import javafx.scene.web.HTMLEditor;
 
 public class Document_Display extends JFrame implements ActionListener {
+
 
     private JButton Commit = new JButton("Commit");
     private JButton New_Section = new JButton("New Section");
@@ -199,6 +201,7 @@ public class Document_Display extends JFrame implements ActionListener {
             }
             this.refresh();
             this.saved=false;
+
 
         }
         if(a.getSource() == Delete){
