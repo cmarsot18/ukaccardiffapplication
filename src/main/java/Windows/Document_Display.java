@@ -193,6 +193,8 @@ public class Document_Display extends JFrame implements ActionListener {
                 Text_Editor test =  new Text_Editor();
                 String[] args = new String[] {"123"};
                 test.main(args);
+                String temp = test.getHtmltext();
+                System.out.println(temp);
 
             }else{
                 JOptionPane jop = new JOptionPane();
