@@ -201,9 +201,9 @@ public class Document_Display extends JFrame implements ActionListener {
                     test.main(args);
                     String temp = new String();
                     while (test.Open()) {
+                        Thread.sleep(1000);
                     }
                     temp = test.getHtmltext();
-                    System.out.println(args);
 //                    this.TextEditorOpen = false;
                 }
 

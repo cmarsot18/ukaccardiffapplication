@@ -42,11 +42,10 @@ public class Text_Editor extends JFrame implements ActionListener{
         this.setSize(1200, 800);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        final HTMLEditor htmlEditor = new HTMLEditor();
         this.addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent e) {
-                html = htmlEditor;
+
                 open = false;
                 dispose();
             }
@@ -55,7 +54,8 @@ public class Text_Editor extends JFrame implements ActionListener{
         runLater(new Runnable() {
             @Override
             public void run() {
-                Scene scene = new Scene(htmlEditor);
+                html = new HTMLEditor();
+                Scene scene = new Scene(html);
                 fxPanel.setScene(scene);
             }
         });
@@ -74,8 +74,10 @@ public class Text_Editor extends JFrame implements ActionListener{
     public String getHtmltext(){return htmltext;}
 
     public boolean Open(){return this.open; }
+
     public void actionPerformed(ActionEvent a){
         htmltext = html.getHtmlText();
+        System.out.println(htmltext);
     }
 
 
