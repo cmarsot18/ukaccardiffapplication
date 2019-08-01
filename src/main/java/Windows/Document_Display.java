@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import Windows.Text_Editor;
 import javafx.stage.Stage;
+import java.util.concurrent.TimeUnit;
 
 
 public class Document_Display extends JFrame implements ActionListener {
@@ -148,9 +149,9 @@ public class Document_Display extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Commit){
             if(name_changed){
-                    Current_Server.getDatabase().drop(opening_name);
+                Current_Server.getDatabase().drop(opening_name);
             }else{
-                    Current_Server.getDatabase().drop(this.root.Getname());
+                Current_Server.getDatabase().drop(this.root.Getname());
             }
             Current_Server.SaveNewDocument(root,"admin","admin");
             JOptionPane jop3 = new JOptionPane();
@@ -199,12 +200,20 @@ public class Document_Display extends JFrame implements ActionListener {
                     Text_Editor test = new Text_Editor();
                     String[] args = new String[]{"123"};
                     test.main(args);
-                    String temp = new String();
+
                     while (test.Open()) {
-                        Thread.sleep(1000);
+                        try
+                        {
+                            Thread.sleep(1000);
+                        }
+                        catch(InterruptedException ex)
+                        {
+                            Thread.currentThread().interrupt();
+                        }
                     }
-                    temp = test.getHtmltext();
-//                    this.TextEditorOpen = false;
+                    String temp = test.getHtmltext();
+                    System.out.println(temp);
+                    this.TextEditorOpen = false;
                 }
 
             }else{

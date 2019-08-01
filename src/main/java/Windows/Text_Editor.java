@@ -28,12 +28,11 @@ import static javafx.application.Platform.runLater;
 public class Text_Editor extends JFrame implements ActionListener{
 
     private String htmltext;
-    private boolean open;
+    public boolean open=true;
     private JButton save = new JButton("Save");
     private HTMLEditor html;
 
     private  HTMLEditor init(){
-        this.open = true;
         final JFXPanel fxPanel = new JFXPanel();
         this.setLayout(new BorderLayout());
         this.add(save,BorderLayout.NORTH);
@@ -45,9 +44,16 @@ public class Text_Editor extends JFrame implements ActionListener{
         this.addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent e) {
+                int reponse = JOptionPane.showConfirmDialog(null,
+                        "Are you sure that you saved?",
+                        "Modification save",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if(reponse == JOptionPane.YES_OPTION ){
+                    open = false;
+                    dispose();
+                }
 
-                open = false;
-                dispose();
             }
         });
 
@@ -63,11 +69,10 @@ public class Text_Editor extends JFrame implements ActionListener{
     }
 
     public void main(String[] args) {
-        Text_Editor temp=new Text_Editor();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                 temp.init();
+                init();
             }
         });
     }

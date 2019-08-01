@@ -34,8 +34,10 @@ public class Open_Create extends JFrame implements ActionListener
                         JOptionPane.QUESTION_MESSAGE);
                 if(reponse == JOptionPane.YES_OPTION ){
                     new Connection();
+                }else{
+                    System.exit(0);
                 }
-                dispose();
+
 
             }
         });
