@@ -175,7 +175,7 @@ public class Document_Display extends JFrame implements ActionListener {
             else{
                 Paragraph New = new Paragraph();
                 JOptionPane jop = new JOptionPane();
-                String name = jop.showInputDialog(null, "Enter the name of the section", "New Section", JOptionPane.QUESTION_MESSAGE);
+                String name = jop.showInputDialog(null, "Enter the name of the Paragraph", "New Paragraph", JOptionPane.QUESTION_MESSAGE);
                 if( name != null) {
                     New.SetName(name);
                     Section Predecessor = root.GetSectionFromRoot(selected);
@@ -197,25 +197,10 @@ public class Document_Display extends JFrame implements ActionListener {
                     jop3.showMessageDialog(null, "An editor is already open, close it then try again", "Editor open", JOptionPane.ERROR_MESSAGE);
                 }else {
                     this.TextEditorOpen = true;
-                    Text_Editor test = new Text_Editor();
-                    String[] args = new String[]{"123"};
-                    test.main(args);
+                    Text_Editor editor=new Text_Editor();
+                    editor.setVisible(true);
 
-                    while (test.Open()) {
-                        try
-                        {
-                            Thread.sleep(1000);
-                        }
-                        catch(InterruptedException ex)
-                        {
-                            Thread.currentThread().interrupt();
-                        }
-                    }
-                    String temp = test.getHtmltext();
-                    System.out.println(temp);
-                    this.TextEditorOpen = false;
                 }
-
             }else{
                 JOptionPane jop = new JOptionPane();
                 String name = jop.showInputDialog(null, "Enter the new name of the section", "Rename", JOptionPane.QUESTION_MESSAGE);
