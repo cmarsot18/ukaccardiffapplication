@@ -32,10 +32,11 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean name_changed;
     private String opening_name;
     private boolean saved;
-    private boolean TextEditorOpen;
+    private Session Current_State;
 
 
-    public Document_Display(Section root, final DB pDB){
+    public Document_Display(Section root, DB pDB){
+        this.Current_State = new Session();
         this.name_changed = false;
         this.saved = false;
         this.opening_name = root.Getname();
@@ -69,12 +70,12 @@ public class Document_Display extends JFrame implements ActionListener {
                 if(saved){
                     dispose();
                 }else{
-                    int reponse = JOptionPane.showConfirmDialog(null,
+                    int answer = JOptionPane.showConfirmDialog(null,
                             "Document not committed, do you want to quit whatever?",
                             "Not saved",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
-                    if(reponse == JOptionPane.YES_OPTION ){
+                    if(answer == JOptionPane.YES_OPTION ){
                         dispose();
                         new Open_Create(Current_Server);
                     }
@@ -146,6 +147,20 @@ public class Document_Display extends JFrame implements ActionListener {
         pan.updateUI();
     }
 
+    protected class Session {
+        Boolean state;
+
+        public void Session(){
+            state = false;
+        }
+        public void setState(boolean test){
+            this.state = test;
+        }
+        public boolean GetState(){
+            return this.state;
+        }
+    }
+
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Commit){
             if(name_changed){
@@ -192,15 +207,16 @@ public class Document_Display extends JFrame implements ActionListener {
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
-                if(TextEditorOpen){
+                if(this.Current_State.GetState()){
                     JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "An editor is already open, close it then try again", "Editor open", JOptionPane.ERROR_MESSAGE);
-                }else {
-                    this.TextEditorOpen = true;
-                    Text_Editor editor=new Text_Editor();
+                    jop3.showMessageDialog(null, "A text editor is alredy open, close it before open a new one.", "Can't open a text editor", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.Current_State.setState(true);
+                    Text_Editor editor = new Text_Editor(Selected,Current_State);
                     editor.setVisible(true);
-
                 }
+
+
             }else{
                 JOptionPane jop = new JOptionPane();
                 String name = jop.showInputDialog(null, "Enter the new name of the section", "Rename", JOptionPane.QUESTION_MESSAGE);

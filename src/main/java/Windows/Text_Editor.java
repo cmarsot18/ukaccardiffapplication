@@ -1,6 +1,8 @@
 package Windows;
 
 import javax.swing.*;
+
+import Document.Paragraph;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.HTMLEditor;
@@ -17,7 +19,7 @@ public class Text_Editor extends JFrame  {
     private HTMLEditor html;
     private boolean saved;
 
-    public Text_Editor(){
+    public Text_Editor(Paragraph pParagraph, Document_Display.Session pSesson){
         saved=false;
         setLayout(new BorderLayout());
         JButton save = new JButton("Save & Exit");
@@ -26,35 +28,31 @@ public class Text_Editor extends JFrame  {
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saved=true;
+                pParagraph.save(getHtmlText());
+                pSesson.setState(false);
                 setVisible(false);
                 System.out.println("SAVED!");
                 System.out.println(getHtmlText());
                 dispose();
             }
-
         });
         add(fxPanel,BorderLayout.CENTER);
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-
             public void windowClosing(WindowEvent e) {
-                int reponse = JOptionPane.showConfirmDialog(null,
+                int answer = JOptionPane.showConfirmDialog(null,
                         "Do you want to save?",
                         "Modification save",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
-                if(reponse == JOptionPane.YES_OPTION ) {
+                if(answer == JOptionPane.YES_OPTION ) {
                     saved=true;
-
-                    //the code to update anything based on the HTML response must be here
-                    //this may mean you need to pass in something to this class so it can update the database.
+                    pParagraph.save(getHtmlText());
+                    pSesson.setState(false);
                     System.out.println("SAVED!");
                     System.out.println(getHtmlText());
                     dispose();
-
-
-
                 } else {
                     saved=false;
                 }
