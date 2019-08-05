@@ -66,7 +66,72 @@ public class Paragraph extends Section
         this.text = text;
     }
 
+    public static ArrayList<String> ExtractColor(String color,String HTML){
+        ArrayList<String> temp = new ArrayList<String>();
+        int max = HTML.length();
+        int j = HTML.indexOf(color);
+        int i = HTML.indexOf("</span>",j);
+        while ((0 < j)&& (i < max)) {
+            String stemp = HTML.substring(j + color.length(), i);
+            i = i + color.length();
+            temp.add(stemp);
+            j = HTML.indexOf(color, i);
+            i = HTML.indexOf("</span>", j);
+        }
+        return temp;
+    }
 
+    public void save(String HTML){
+        String RED = "<span style=\"background-color: rgb(255, 0, 0);\">";
+        String BLUE = "<span style=\"background-color: rgb(0, 255, 255);\">";
+        String PINK = "<span style=\"background-color: rgb(255, 0, 255);\">";
+        String GREEN = "<span style=\"background-color: rgb(0, 255, 0);\">";
+        String R = new String();
+        String A = new String();
+        String S = new String();
+        String E = new String();
+        ArrayList<String> r_elt = new ArrayList<String>();
+        ArrayList<String> a_elt = new ArrayList<String>();
+        ArrayList<String> s_elt = new ArrayList<String>();
+        ArrayList<String> e_elt = new ArrayList<String>();
+        r_elt = ExtractColor(RED,HTML);
+        a_elt = ExtractColor(GREEN,HTML);
+        s_elt = ExtractColor(PINK,HTML);
+        e_elt = ExtractColor(BLUE,HTML);
+        Iterator<String> temp = r_elt.iterator();
+        String stemp = temp.next();
+        R = stemp;
+        while(temp.hasNext()){
+            stemp = temp.next();
+            R = R +","+ stemp;
+        }
+        temp = a_elt.iterator();
+        stemp = temp.next();
+        A = stemp;
+        while(temp.hasNext()){
+            stemp = temp.next();
+            A = A +","+ stemp;
+        }
+        temp = s_elt.iterator();
+        stemp = temp.next();
+        S = stemp;
+        while(temp.hasNext()){
+            stemp = temp.next();
+            S = S +","+ stemp;
+        }
+        temp = e_elt.iterator();
+        stemp=temp.next();
+        E = stemp;
+        while(temp.hasNext()){
+            stemp = temp.next();
+            E = E +","+ stemp;
+        }
+        this.setR(R);
+        this.setA(A);
+        this.setS(S);
+        this.setE(E);
+        this.setText(HTML);
+    }
 }
 
 

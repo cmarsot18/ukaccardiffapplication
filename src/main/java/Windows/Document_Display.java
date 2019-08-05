@@ -147,7 +147,7 @@ public class Document_Display extends JFrame implements ActionListener {
         pan.updateUI();
     }
 
-    protected class Session {
+    public static class Session {
         Boolean state;
 
         public void Session(){
