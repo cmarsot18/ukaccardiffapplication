@@ -34,10 +34,10 @@ public class RASE extends JFrame implements ActionListener {
         this.A = this.DataToUI(pPraragraph.getA());
         this.S = this.DataToUI(pPraragraph.getS());
         this.E = this.DataToUI(pPraragraph.getE());
-        System.out.println(R[0]);
-        System.out.println(A[0]);
-        System.out.println(S[0]);
-        System.out.println(E[0]+" / "+E[1]);
+//        System.out.println(R[0]);
+//        System.out.println(A[0]);
+//        System.out.println(S[0]);
+//        System.out.println(E[0]+" / "+E[1]);
         this.RASE_List = this.choices();
         choice = new JComboBox<>(this.RASE_List);
         this.setSize(500,300);
@@ -79,36 +79,62 @@ public class RASE extends JFrame implements ActionListener {
 
         public Pan(String pstring){
             this.setLayout(new GridLayout(5,2));
-            int i,j;
+            String temp;
+            int i,j=0;
             i=pstring.indexOf(">>");
-            init(Topic,"Topic :",pstring,0,i);
+            temp = pstring.substring(j,i);
+            if(temp.equals("none")){
+                Topic = new JTextField();
+            }else{
+                Topic = new JTextField(temp);
+            }
+            this.add(new JLabel("Topic :",JLabel.CENTER));
+            this.add(Topic);
             i=i+2;
             j=pstring.indexOf(">>",i+1);
-            init(Properties,"Properties :",pstring,i,j);
+            temp = pstring.substring(i,j);
+            if(temp.equals("none")){
+                Properties = new JTextField();
+            }else{
+                Properties = new JTextField(temp);
+            }
+            this.add(new JLabel("Properties :",JLabel.CENTER));
+            this.add(Properties);
             i=j+2;
             j=pstring.indexOf(">>",i+1);
-            init(Comparison,"Comparison :",pstring,i,j);
+            temp = pstring.substring(i,j);
+            if(temp.equals("none")){
+                Comparison = new JTextField();
+            }else{
+                Comparison = new JTextField(temp);
+            }
+            this.add(new JLabel("Comparison :",JLabel.CENTER));
+            this.add(Comparison);
             i=j+2;
             j=pstring.indexOf(">>",i+1);
-            init(Value,"Value :",pstring,i,j);
+            temp = pstring.substring(i,j);
+            if(temp.equals("none")){
+                Value = new JTextField();
+            }else{
+                Value = new JTextField(temp);
+            }
+            this.add(new JLabel("Value :",JLabel.CENTER));
+            this.add(Value);
             i=j+2;
             j=pstring.length();
-            init(Unit,"Unit :",pstring,i,j);
-        }
-        private void init(JTextField t,String Title,String s,int i,int j){
-            String temp = s.substring(i,j);
+            temp = pstring.substring(i,j);
             if(temp.equals("none")){
-                t = new JTextField();
+                Unit = new JTextField();
             }else{
-                t = new JTextField(temp);
+                Unit = new JTextField(temp);
             }
-            this.add(new JLabel(Title,JLabel.CENTER));
-            this.add(t);
+            this.add(new JLabel("Unit :",JLabel.CENTER));
+            this.add(Unit);
         }
+
         public String GetTopic(){
             String temp = Topic.getText();
-            System.out.println(temp);
-            if(temp == null){
+            if(temp.isEmpty()){
                 return "none";
             } else{
                 return temp;
@@ -116,7 +142,7 @@ public class RASE extends JFrame implements ActionListener {
         }
         public String GetProperties(){
             String temp = Properties.getText();
-            if(temp == null){
+            if(temp.isEmpty()){
                 return "none";
             } else{
                 return temp;
@@ -124,7 +150,7 @@ public class RASE extends JFrame implements ActionListener {
         }
         public String GetComparison(){
             String temp = Comparison.getText();
-            if(temp == null){
+            if(temp.isEmpty()){
                 return "none";
             } else{
                 return temp;
@@ -132,7 +158,7 @@ public class RASE extends JFrame implements ActionListener {
         }
         public String GetValue(){
             String temp = Value.getText();
-            if(temp == null){
+            if(temp.isEmpty()){
                 return "none";
             } else{
                 return temp;
@@ -140,7 +166,7 @@ public class RASE extends JFrame implements ActionListener {
         }
         public String GetUnit(){
             String temp = Unit.getText();
-            if(temp == null){
+            if(temp.isEmpty()){
                 return "none";
             } else{
                 return temp;
@@ -211,70 +237,121 @@ public class RASE extends JFrame implements ActionListener {
     private class ItemState implements ItemListener {
         public void itemStateChanged(ItemEvent e){
             Selected = choice.getSelectedItem().toString();
+            System.out.println(Selected);
         }
     }
 
     public void actionPerformed(ActionEvent a){
         int max = this.RASE_List.length;
-        String Rase = this.ChoicesToData(this.RASE_List[ind]);
-        System.out.println(this.ChoicesToData(this.RASE_List[ind]));
         if (a.getSource() == submit){
 
         }
-        if (a.getSource() == previous){
-            if (Current_pan == null){
-                System.out.println("test");
+        if (a.getSource() == previous) {
+            if (Current_pan == null) {
                 Current_pan = new Pan(this.ChoicesToData(this.RASE_List[0]));
+                ind = 0;
                 panel.add(Current_pan);
                 panel.updateUI();
-            }else {
-                System.out.println(Current_pan.GetTopic());
-                if(Current_pan.GetTopic().equals("none")){
+            } else {
+                if (Current_pan.GetTopic().equals("none")) {
                     JOptionPane jop3 = new JOptionPane();
                     jop3.showMessageDialog(null, "Can`t access to the server", "Connection Failure", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    Rase = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
-                    if(ind == 0){
-                        ind = max;
-                    }else {
-                        ind--;
+                } else {
+                    String c1 = RASE_List[ind].substring(0, 1);
+                    String c2 = RASE_List[ind].substring(1, 2);
+                    if (c1.equals("R")) {
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                     }
-                    panel.remove(Current_pan);
-                    panel.add(new Pan(this.ChoicesToData(this.RASE_List[ind])));
-                    panel.updateUI();
+                    if (c1.equals("A")) {
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("S")) {
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("E")) {
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                        if (ind == 0) {
+                            ind = max - 1;
+                        } else {
+                            ind--;
+                        }
+                        panel.remove(Current_pan);
+                        Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
+                        panel.add(Current_pan);
+                        panel.updateUI();
+                    }
                 }
+
             }
 
-        }
         if (a.getSource() == next){
             if (Current_pan == null){
-                System.out.println("test");
                 Current_pan = new Pan(this.ChoicesToData(this.RASE_List[0]));
+                ind = 0;
                 panel.add(Current_pan);
                 panel.updateUI();
             }else {
-                System.out.println(Current_pan.GetTopic());
                 if(Current_pan.GetTopic().equals("none")){
                     JOptionPane jop3 = new JOptionPane();
                     jop3.showMessageDialog(null, "Can`t access to the server", "Connection Failure", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    Rase = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
-                    if(ind == max){
+                    String c1 = RASE_List[ind].substring(0,1);
+                    String c2 = RASE_List[ind].substring(1,2);
+                    if(c1.equals("R")){
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    }if(c1.equals("A")){
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    }if(c1.equals("S")){
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    }if(c1.equals("E")) {
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    }
+                    if(ind == max-1){
                         ind = 0;
                     }else {
                         ind++;
                     }
                     panel.remove(Current_pan);
-                    panel.add(new Pan(this.ChoicesToData(this.RASE_List[ind])));
+                    Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
+                    panel.add(Current_pan);
                     panel.updateUI();
                 }
             }
         }
         if (a.getSource() == Select){
-
+            if(Current_pan != null){
+                String c1 = RASE_List[ind].substring(0,1);
+                String c2 = RASE_List[ind].substring(1,2);
+                if(c1.equals("R")){
+                    this.R[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                }if(c1.equals("A")){
+                    this.A[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                }if(c1.equals("S")){
+                    this.S[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                }if(c1.equals("E")) {
+                    this.E[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                }
+                panel.remove(Current_pan);
+            }
+            String temp = this.ChoicesToData(Selected);
+            String c1 = Selected.substring(0,1);
+            String c2 = Selected.substring(1,2);
+            if(c1.equals("R")){
+                ind = Integer.valueOf(c2);
+            }
+            if(c1.equals("A")){
+                ind = R.length+ Integer.valueOf(c2);
+            }
+            if(c1.equals("S")){
+                ind = R.length + A.length + Integer.valueOf(c2);
+            }
+            if(c1.equals("E")) {
+                ind = R.length + A.length + S.length + Integer.valueOf(c2);
+            }
+            Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
+            panel.add(Current_pan);
+            panel.updateUI();
         }
-
     }
-
-
 }
