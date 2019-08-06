@@ -96,8 +96,8 @@ public class Section
             ArrayList<String> Predecessors = new ArrayList<String>();
             int max = Path.length();
             int i = 0;
-            int j = 0;
-            while (j < max) {
+            int j;
+            while (i < max) {
                 j = Path.indexOf(".", i);
                 i = Path.indexOf("<%>", i);
                 String temp = Path.substring(j + 1, i);

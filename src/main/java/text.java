@@ -7,7 +7,7 @@ public class text {
     public static void main(String[] args) {
         Paragraph test = new Paragraph();
 
-        Text_Editor editor=new Text_Editor(test,new Document_Display.Session());
+        Text_Editor editor=new Text_Editor(test,null,"t");
         editor.setVisible(true);
 
 

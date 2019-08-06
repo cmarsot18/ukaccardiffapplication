@@ -19,17 +19,18 @@ public class Text_Editor extends JFrame  {
     private HTMLEditor html;
     private boolean saved;
 
-    public Text_Editor(Paragraph pParagraph, Document_Display.Session pSesson){
+    public Text_Editor(Paragraph pParagraph,String init,String name){
         saved=false;
         setLayout(new BorderLayout());
         JButton save = new JButton("Save & Exit");
+        setTitle(name);
         JFXPanel fxPanel = new JFXPanel();
         add(save,BorderLayout.NORTH);
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saved=true;
                 pParagraph.save(getHtmlText());
-                pSesson.setState(false);
+//                pSesson.setState(false);
                 setVisible(false);
                 System.out.println("SAVED!");
                 System.out.println(getHtmlText());
@@ -49,7 +50,7 @@ public class Text_Editor extends JFrame  {
                 if(answer == JOptionPane.YES_OPTION ) {
                     saved=true;
                     pParagraph.save(getHtmlText());
-                    pSesson.setState(false);
+//                    pSesson.setState(false);
                     System.out.println("SAVED!");
                     System.out.println(getHtmlText());
                     dispose();
@@ -66,6 +67,9 @@ public class Text_Editor extends JFrame  {
             @Override
             public void run() {
                 html = new HTMLEditor();
+                if(init != null){
+                    html.setHtmlText(init);
+                }
                 Scene scene = new Scene(html);
                 fxPanel.setScene(scene);
             }

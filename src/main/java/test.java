@@ -87,13 +87,13 @@ public class test{
 
         //new Document_Display(root);
 //    new Doc_Creation();
-//    new Connection();
+    new Connection();
 //        new Document_Select(test);
 
 //        System.out.println(root.GetSectionFromRoot("0.doc<%>1.Part1<%>1.Part11<%>").Getname());
-        String test = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><span style=\"background-color: rgb(255, 0, 0);\">Rouge</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(255, 0, 255);\">Rose</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 0);\">Vert</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 255);\">Bleu</span></p></body></html>";
-        Paragraph ptest = new Paragraph();
-        ptest.save(test);
+//        String test = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><span style=\"background-color: rgb(255, 0, 0);\">Rouge</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(255, 0, 255);\">Rose</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 0);\">Vert</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 255);\">Bleu</span></p></body></html>";
+//        Paragraph ptest = new Paragraph();
+//        ptest.save(test);
 //        Section.ExtractColor("<span style=\"background-color: rgb(0, 255, 255);\">",test);
 
 

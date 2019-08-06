@@ -32,11 +32,11 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean name_changed;
     private String opening_name;
     private boolean saved;
-    private Session Current_State;
+    private Session Current_State = new Session();
 
 
     public Document_Display(Section root, DB pDB){
-        this.Current_State = new Session();
+        new Session();
         this.name_changed = false;
         this.saved = false;
         this.opening_name = root.Getname();
@@ -151,7 +151,7 @@ public class Document_Display extends JFrame implements ActionListener {
         Boolean state;
 
         public void Session(){
-            state = false;
+            this.state = false;
         }
         public void setState(boolean test){
             this.state = test;
@@ -207,14 +207,15 @@ public class Document_Display extends JFrame implements ActionListener {
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
-                if(this.Current_State.GetState()){
-                    JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "A text editor is alredy open, close it before open a new one.", "Can't open a text editor", JOptionPane.ERROR_MESSAGE);
-                }else{
+                Paragraph temp = (Paragraph) Selected;
+//                if(Current_State.GetState()){
+//                    JOptionPane jop3 = new JOptionPane();
+//                    jop3.showMessageDialog(null, "A text editor is alredy open, close it before open a new one.", "Can't open a text editor", JOptionPane.ERROR_MESSAGE);
+//                }else{
                     this.Current_State.setState(true);
-                    Text_Editor editor = new Text_Editor(Selected,Current_State);
+                    Text_Editor editor = new Text_Editor(temp,((Paragraph) Selected).getText(),Selected.Getname());
                     editor.setVisible(true);
-                }
+//                }
 
 
             }else{
