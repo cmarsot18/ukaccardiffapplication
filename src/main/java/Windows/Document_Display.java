@@ -175,43 +175,43 @@ public class Document_Display extends JFrame implements ActionListener {
         }
 
         if((a.getSource() == New_Section)||(a.getSource() == New_Paragraph)){
-            if(a.getSource() == New_Section){
-                Section New = new Section();
-                JOptionPane jop = new JOptionPane();
-                String name = jop.showInputDialog(null, "Enter the name of the section", "New Section", JOptionPane.QUESTION_MESSAGE);
-                if(name != null) {
-                    New.SetName(name);
-                    Section Predecessor = root.GetSectionFromRoot(selected);
-                    Predecessor.AddSuccessor(New);
-                    New.SetPredecessor(Predecessor);
+            if(root.GetSectionFromRoot(selected)instanceof Paragraph ){
+                JOptionPane jop3 = new JOptionPane();
+                jop3.showMessageDialog(null, "You can`t add a successor to a Paragraph", "Add failure", JOptionPane.ERROR_MESSAGE);
+            }else{
+                if(a.getSource() == New_Section){
+                    Section New = new Section();
+                    JOptionPane jop = new JOptionPane();
+                    String name = jop.showInputDialog(null, "Enter the name of the section", "New Section", JOptionPane.QUESTION_MESSAGE);
+                    if(name != null) {
+                        New.SetName(name);
+                        Section Predecessor = root.GetSectionFromRoot(selected);
+                        Predecessor.AddSuccessor(New);
+                        New.SetPredecessor(Predecessor);
+                    }
+                    this.refresh();
                 }
-                this.refresh();
-            }
-            else{
-                Paragraph New = new Paragraph();
-                JOptionPane jop = new JOptionPane();
-                String name = jop.showInputDialog(null, "Enter the name of the Paragraph", "New Paragraph", JOptionPane.QUESTION_MESSAGE);
-                if( name != null) {
-                    New.SetName(name);
-                    Section Predecessor = root.GetSectionFromRoot(selected);
-                    Predecessor.AddSuccessor(New);
-                    New.SetPredecessor(Predecessor);
+                else{
+                        Paragraph New = new Paragraph();
+                        JOptionPane jop = new JOptionPane();
+                        String name = jop.showInputDialog(null, "Enter the name of the Paragraph", "New Paragraph", JOptionPane.QUESTION_MESSAGE);
+                        if( name != null) {
+                            New.SetName(name);
+                            Section Predecessor = root.GetSectionFromRoot(selected);
+                            Predecessor.AddSuccessor(New);
+                            New.SetPredecessor(Predecessor);
 
+                        }
+                        this.refresh();
+                        this.saved=false;
                 }
-                this.refresh();
-                this.saved=false;
             }
-
         }
 
         if(a.getSource() == Editing){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
                 Paragraph temp = (Paragraph) Selected;
-//                if(Current_State.GetState()){
-//                    JOptionPane jop3 = new JOptionPane();
-//                    jop3.showMessageDialog(null, "A text editor is alredy open, close it before open a new one.", "Can't open a text editor", JOptionPane.ERROR_MESSAGE);
-//                }else{
                     this.Current_State.setState(true);
                     Text_Editor editor = new Text_Editor(temp,((Paragraph) Selected).getText(),Selected.Getname());
                     editor.setVisible(true);
