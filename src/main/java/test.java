@@ -14,7 +14,7 @@ public class test{
 //        Section Part2 = new Section();
 //        Section Part11 = new Section();
 //        Section Part12 = new Section();
-//        Paragraph text1 = new Paragraph();
+        Paragraph text1 = new Paragraph();
 //        Paragraph text2 = new Paragraph();
 //        Paragraph text3 = new Paragraph();
 //        ArrayList<Section> list1 = new ArrayList <Section>();
@@ -53,10 +53,10 @@ public class test{
 //        text1.SetName("text1");
 //        text2.SetName("text2");
 //        text3.SetName("text3");
-//        text1.setA("a1");
-//        text1.setE("e1");
-//        text1.setR("r1");
-//        text1.setS("s1");
+        text1.setA("(vert1>>none>>none>>none>>none)");
+        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>none>>none>>none>>none)");
+        text1.setR("(rouge1 >>none>>none>>none>>none)");
+        text1.setS("(rose1 >>none>>none>>none>>none)");
 //        text1.setText("rase1");
 //        text2.setA("a2");
 //        text2.setE("e2");
@@ -87,15 +87,10 @@ public class test{
 
         //new Document_Display(root);
 //    new Doc_Creation();
-    new Connection();
+//    new Connection();
 //        new Document_Select(test);
 
-//        System.out.println(root.GetSectionFromRoot("0.doc<%>1.Part1<%>1.Part11<%>").Getname());
-//        String test = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><span style=\"background-color: rgb(255, 0, 0);\">Rouge</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(255, 0, 255);\">Rose</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 0);\">Vert</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 255);\">Bleu</span></p></body></html>";
-//        Paragraph ptest = new Paragraph();
-//        ptest.save(test);
-//        Section.ExtractColor("<span style=\"background-color: rgb(0, 255, 255);\">",test);
-
+        new RASE(text1);
 
 
 

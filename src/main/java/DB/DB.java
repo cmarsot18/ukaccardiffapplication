@@ -31,7 +31,6 @@ public class DB
         boolean Connection_established;
         this.Login = Login;
         this.Password = Password;
-        System.out.println(Login+":"+Password);
         StackTraceElement[] tab = null;
         try{
 

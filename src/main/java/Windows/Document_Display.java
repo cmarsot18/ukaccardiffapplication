@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.*;
 import Windows.Text_Editor;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 
@@ -32,11 +35,10 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean name_changed;
     private String opening_name;
     private boolean saved;
-    private Session Current_State = new Session();
+    private ArrayList<Text_Editor> OpenedEditors = new ArrayList<>();
 
 
     public Document_Display(Section root, DB pDB){
-        new Session();
         this.name_changed = false;
         this.saved = false;
         this.opening_name = root.Getname();
@@ -68,7 +70,13 @@ public class Document_Display extends JFrame implements ActionListener {
 
             public void windowClosing(WindowEvent e) {
                 if(saved){
+                    Iterator<Text_Editor> temp = OpenedEditors.iterator();
+                    while (temp.hasNext()){
+                        Text_Editor t = temp.next();
+                        t.dispose();
+                    }
                     dispose();
+                    new Open_Create(Current_Server);
                 }else{
                     int answer = JOptionPane.showConfirmDialog(null,
                             "Document not committed, do you want to quit whatever?",
@@ -76,6 +84,11 @@ public class Document_Display extends JFrame implements ActionListener {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
                     if(answer == JOptionPane.YES_OPTION ){
+                        Iterator<Text_Editor> temp = OpenedEditors.iterator();
+                        while ((temp.hasNext())&&(!OpenedEditors.isEmpty())){
+                            Text_Editor t = temp.next();
+                            t.dispose();
+                        }
                         dispose();
                         new Open_Create(Current_Server);
                     }
@@ -147,20 +160,6 @@ public class Document_Display extends JFrame implements ActionListener {
         pan.updateUI();
     }
 
-    public static class Session {
-        Boolean state;
-
-        public void Session(){
-            this.state = false;
-        }
-        public void setState(boolean test){
-            this.state = test;
-        }
-        public boolean GetState(){
-            return this.state;
-        }
-    }
-
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Commit){
             if(name_changed){
@@ -212,12 +211,9 @@ public class Document_Display extends JFrame implements ActionListener {
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected instanceof Paragraph){
                 Paragraph temp = (Paragraph) Selected;
-                    this.Current_State.setState(true);
-                    Text_Editor editor = new Text_Editor(temp,((Paragraph) Selected).getText(),Selected.Getname());
-                    editor.setVisible(true);
-//                }
-
-
+                Text_Editor editor = new Text_Editor(temp,((Paragraph) Selected).getText(),Selected.Getname());
+                OpenedEditors.add(editor);
+                editor.setVisible(true);
             }else{
                 JOptionPane jop = new JOptionPane();
                 String name = jop.showInputDialog(null, "Enter the new name of the section", "Rename", JOptionPane.QUESTION_MESSAGE);

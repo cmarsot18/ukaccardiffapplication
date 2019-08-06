@@ -99,37 +99,37 @@ public class Paragraph extends Section
         s_elt = ExtractColor(PINK,HTML);
         e_elt = ExtractColor(BLUE,HTML);
         Iterator<String> temp = r_elt.iterator();
-        String stemp = temp.next();
+        String stemp = "("+ temp.next()+">>none>>none>>none>>none)";
         R = stemp;
         while(temp.hasNext()){
-            stemp = temp.next();
-            R = R +","+ stemp;
+            stemp ="("+ temp.next()+">>none>>none>>none>>none)";
+            R = R +"<$>"+ stemp;
         }
         temp = a_elt.iterator();
-        stemp = temp.next();
+        stemp ="("+ temp.next()+">>none>>none>>none>>none)";
         A = stemp;
         while(temp.hasNext()){
-            stemp = temp.next();
-            A = A +","+ stemp;
+            stemp ="("+ temp.next()+">>none>>none>>none>>none)";
+            A = A +"<$>"+ stemp;
         }
         temp = s_elt.iterator();
-        stemp = temp.next();
+        stemp ="("+ temp.next()+">>none>>none>>none>>none)";
         S = stemp;
         while(temp.hasNext()){
-            stemp = temp.next();
-            S = S +","+ stemp;
+            stemp ="("+ temp.next()+">>none>>none>>none>>none)";
+            S = S +"<$>"+ stemp;
         }
         temp = e_elt.iterator();
-        stemp=temp.next();
+        stemp ="("+ temp.next()+">>none>>none>>none>>none)";
         E = stemp;
         while(temp.hasNext()){
-            stemp = temp.next();
-            E = E +","+ stemp;
+            stemp ="("+ temp.next()+">>none>>none>>none>>none)";
+            E = E +"<$>"+ stemp;
         }
-        this.setR(R);
-        this.setA(A);
-        this.setS(S);
-        this.setE(E);
+        this.setR(R.replace("&nbsp;",""));
+        this.setA(A.replace("&nbsp;",""));
+        this.setS(S.replace("&nbsp;",""));
+        this.setE(E.replace("&nbsp;",""));
         this.setText(HTML);
     }
 }
