@@ -22,12 +22,20 @@ public class Text_Editor extends JFrame  {
     public Text_Editor(Paragraph pParagraph,String init,String name){
         saved=false;
         setLayout(new BorderLayout());
-        JButton save = new JButton("Save");
-        JButton Edit_RASE = new JButton("Edit RASE");
+        JButton save = new JButton("Save and edit RASE");
         JPanel Panel = new JPanel();
         Panel.setLayout(new GridLayout(1,8));
+        JButton Rase = new JButton("Edit RASE");
+        Rase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saved=true;
+                pParagraph.update(getHtmlText());
+                new RASE(pParagraph);
+            }
+        });
         Panel.add(save);
-        Panel.add(Edit_RASE);
+        Panel.add(Rase);
         Panel.add(new JLabel("Color correspondences : ",JLabel.CENTER));
         JPanel red = new JPanel();
         red.setBackground(Color.RED);
@@ -51,7 +59,7 @@ public class Text_Editor extends JFrame  {
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saved=true;
-                pParagraph.save(getHtmlText());
+                pParagraph.update(getHtmlText());
             }
         });
         add(fxPanel,BorderLayout.CENTER);

@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import com.sun.javafx.binding.StringFormatter;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class RASE extends JFrame implements ActionListener {
@@ -27,6 +25,7 @@ public class RASE extends JFrame implements ActionListener {
     private String Selected;
     private int ind = 0;
     private String[] RASE_List;
+    private Paragraph Data;
 
 
     public RASE(Paragraph pPraragraph){
@@ -34,17 +33,14 @@ public class RASE extends JFrame implements ActionListener {
         this.A = this.DataToUI(pPraragraph.getA());
         this.S = this.DataToUI(pPraragraph.getS());
         this.E = this.DataToUI(pPraragraph.getE());
-//        System.out.println(R[0]);
-//        System.out.println(A[0]);
-//        System.out.println(S[0]);
-//        System.out.println(E[0]+" / "+E[1]);
+        this.Data = pPraragraph;
         this.RASE_List = this.choices();
         choice = new JComboBox<>(this.RASE_List);
         this.setSize(500,300);
         this.setLocationRelativeTo(null);
         this.setTitle("RASE");
         this.Current_pan = null;
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         choice.addItemListener(new ItemState());
@@ -200,8 +196,36 @@ public class RASE extends JFrame implements ActionListener {
         return temp;
     }
 
-    private String UIToDate(String pString){
-        return null;
+    private void UIToData(){
+        int i;
+        String temp = "("+ R[0];
+        for(i=1;i<R.length; i++){
+            temp = temp + ")<$>(" + R[i];
+        }
+        temp = temp +")";
+        Data.setR(temp);
+        System.out.println(Data.getR());
+        temp="("+A[0];
+        for(i=1;i<A.length; i++){
+            temp = temp + ")<$>(" + A[i];
+        }
+        temp = temp +")";
+        Data.setA(temp);
+        System.out.println(Data.getA());
+        temp="("+S[0];
+        for(i=1;i<S.length; i++){
+            temp = temp + ")<$>(" + S[i];
+        }
+        temp = temp +")";
+        Data.setS(temp);
+        System.out.println(Data.getS());
+        temp="("+E[0];
+        for(i=1;i<E.length; i++){
+            temp = temp + ")<$>(" + E[i];
+        }
+        temp = temp +")";
+        Data.setE(temp);
+        System.out.println(Data.getE());
     }
 
     private String[] choices(){
@@ -237,13 +261,30 @@ public class RASE extends JFrame implements ActionListener {
     private class ItemState implements ItemListener {
         public void itemStateChanged(ItemEvent e){
             Selected = choice.getSelectedItem().toString();
-            System.out.println(Selected);
         }
     }
 
     public void actionPerformed(ActionEvent a){
         int max = this.RASE_List.length;
         if (a.getSource() == submit){
+            if(Current_pan != null){
+                String c1 = RASE_List[ind].substring(0, 1);
+                String c2 = RASE_List[ind].substring(1, 2);
+                if (c1.equals("R")) {
+                    this.R[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                }
+                if (c1.equals("A")) {
+                    this.A[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                }
+                if (c1.equals("S")) {
+                    this.S[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                }
+                if (c1.equals("E")) {
+                    this.E[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                }
+            }
+            this.UIToData();
+            this.dispose();
 
         }
         if (a.getSource() == previous) {
@@ -334,6 +375,7 @@ public class RASE extends JFrame implements ActionListener {
                 }
                 panel.remove(Current_pan);
             }
+            System.out.println(Selected);
             String temp = this.ChoicesToData(Selected);
             String c1 = Selected.substring(0,1);
             String c2 = Selected.substring(1,2);
