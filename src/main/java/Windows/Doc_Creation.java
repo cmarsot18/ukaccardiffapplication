@@ -43,6 +43,7 @@ public class Doc_Creation extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent a){
         Section NewDoc = new Section();
         NewDoc.SetName(this.Name.getText());
+        Current_Server.SaveNewDocument(NewDoc,"admin","admin");
         new Document_Display(NewDoc,Current_Server);
         this.dispose();
     }

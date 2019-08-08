@@ -73,7 +73,6 @@ public class Document_Display extends JFrame implements ActionListener {
                     Iterator<Text_Editor> temp = OpenedEditors.iterator();
                     while (temp.hasNext()){
                         Text_Editor t = temp.next();
-                        t.dispose();
                     }
                     dispose();
                     new Open_Create(Current_Server);
@@ -87,7 +86,7 @@ public class Document_Display extends JFrame implements ActionListener {
                         Iterator<Text_Editor> temp = OpenedEditors.iterator();
                         while ((temp.hasNext())&&(!OpenedEditors.isEmpty())){
                             Text_Editor t = temp.next();
-                            t.dispose();
+                            ;
                         }
                         dispose();
                         new Open_Create(Current_Server);
@@ -163,9 +162,9 @@ public class Document_Display extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Commit){
             if(name_changed){
-                Current_Server.getDatabase().drop(opening_name);
+                Current_Server.getDatabase().drop(opening_name.replace(" ",""));
             }else{
-                Current_Server.getDatabase().drop(this.root.Getname());
+                Current_Server.getDatabase().drop(this.root.Getname().replace(" ",""));
             }
             Current_Server.SaveNewDocument(root,"admin","admin");
             JOptionPane jop3 = new JOptionPane();

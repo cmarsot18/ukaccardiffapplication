@@ -14,7 +14,7 @@ public class RASE extends JFrame implements ActionListener {
     private JButton previous = new JButton("<= Previous");
     private JButton next = new JButton("Next =>");
     private JButton Select = new JButton("Select");
-    private JComboBox<String> choice = new JComboBox<>();
+    private JComboBox<String> choice;
     private JButton submit = new JButton("Submit");
     private JPanel panel = new JPanel();
     private Pan Current_pan;
@@ -29,10 +29,10 @@ public class RASE extends JFrame implements ActionListener {
 
 
     public RASE(Paragraph pPraragraph){
-        this.R = this.DataToUI(pPraragraph.getR());
-        this.A = this.DataToUI(pPraragraph.getA());
-        this.S = this.DataToUI(pPraragraph.getS());
-        this.E = this.DataToUI(pPraragraph.getE());
+        this.R = DataToUI(pPraragraph.getR());
+        this.A = DataToUI(pPraragraph.getA());
+        this.S = DataToUI(pPraragraph.getS());
+        this.E = DataToUI(pPraragraph.getE());
         this.Data = pPraragraph;
         this.RASE_List = this.choices();
         choice = new JComboBox<>(this.RASE_List);
@@ -43,6 +43,8 @@ public class RASE extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        Current_pan = new Pan(this.ChoicesToData(this.RASE_List[0]));
+        ind = 0;
         choice.addItemListener(new ItemState());
         submit.addActionListener(this);
         previous.addActionListener(this);
@@ -61,6 +63,7 @@ public class RASE extends JFrame implements ActionListener {
         panel3.add(new JLabel(""));
         panel.setLayout(new BorderLayout());
         panel.add(panel2,BorderLayout.NORTH);
+        panel.add(Current_pan,BorderLayout.CENTER);
         panel.add(panel3,BorderLayout.SOUTH);
         this.setContentPane(panel);
         this.setVisible(true);
@@ -170,7 +173,10 @@ public class RASE extends JFrame implements ActionListener {
         }
     }
 
-    private String[] DataToUI(String pString){
+    public static String[] DataToUI(String pString){
+        if(pString.length() == 1){
+            return null;
+        }
         int elt = StringUtils.countMatches(pString, "<$>")+1;
         String temp[] = new String[elt];
         int i=0;
@@ -198,46 +204,79 @@ public class RASE extends JFrame implements ActionListener {
 
     private void UIToData(){
         int i;
-        String temp = "("+ R[0];
-        for(i=1;i<R.length; i++){
-            temp = temp + ")<$>(" + R[i];
+        String temp;
+        if(!(this.R == null)){
+            temp = "(" + R[0];
+            for (i = 1; i < R.length; i++) {
+                temp = temp + ")<$>(" + R[i];
+            }
+            temp = temp + ")";
+            Data.setR(temp);
         }
-        temp = temp +")";
-        Data.setR(temp);
         System.out.println(Data.getR());
-        temp="("+A[0];
-        for(i=1;i<A.length; i++){
-            temp = temp + ")<$>(" + A[i];
+        if(!(this.A == null)){
+            temp = "(" + A[0];
+            for (i = 1; i < A.length; i++) {
+                temp = temp + ")<$>(" + A[i];
+            }
+            temp = temp + ")";
+            Data.setA(temp);
         }
-        temp = temp +")";
-        Data.setA(temp);
         System.out.println(Data.getA());
-        temp="("+S[0];
-        for(i=1;i<S.length; i++){
-            temp = temp + ")<$>(" + S[i];
+        if(!(this.S == null)){
+            temp="("+S[0];
+            for(i=1;i<S.length; i++){
+                temp = temp + ")<$>(" + S[i];
+            }
+            temp = temp +")";
+            Data.setS(temp);
         }
-        temp = temp +")";
-        Data.setS(temp);
         System.out.println(Data.getS());
-        temp="("+E[0];
-        for(i=1;i<E.length; i++){
-            temp = temp + ")<$>(" + E[i];
+        if(!(this.E == null)){
+            temp="("+E[0];
+            for(i=1;i<E.length; i++){
+                temp = temp + ")<$>(" + E[i];
+            }
+            temp = temp +")";
+            Data.setE(temp);
         }
-        temp = temp +")";
-        Data.setE(temp);
         System.out.println(Data.getE());
     }
 
     private String[] choices(){
-        String temp[] = new String[R.length+A.length+S.length+E.length];
-        for(int i = 0 ; i < R.length; i++){
-            temp[i]="R"+i+"-"+R[i].substring(0,R[i].indexOf(">>"));
-        }for(int i = 0 ; i < A.length; i++){
-            temp[R.length+i]="A"+i+"-"+A[i].substring(0,A[i].indexOf(">>"));
-        }for(int i = 0 ; i < S.length; i++){
-            temp[i+R.length+A.length]="S"+i+"-"+S[i].substring(0,S[i].indexOf(">>"));
-        }for(int i = 0 ; i < E.length; i++){
-            temp[i+R.length+A.length+S.length]="E"+i+"-"+E[i].substring(0,E[i].indexOf(">>"));
+        int i=0,j=0,k=0,l=0,n=0;
+        if(!(this.R == null)){
+            n = R.length;
+        }
+        if(!(this.A == null)){
+            j = A.length;
+        }
+        if(!(this.S == null)){
+            k = S.length;
+        }
+        if(!(this.E == null)){
+            l = E.length;
+        }
+        String temp[] = new String[n+j+k+l];
+        if(!(this.R == null)){
+            for( i = 0 ; i < R.length; i++){
+                temp[i]="R"+i+"-"+R[i].substring(0,R[i].indexOf(">>"));
+            }
+        }
+        if(!(this.A == null)){
+            for( i = 0 ; i < A.length; i++){
+                temp[n+i]="A"+i+"-"+A[i].substring(0,A[i].indexOf(">>"));
+            }
+        }
+        if(!(this.S == null)){
+            for( i = 0 ; i < S.length; i++){
+                temp[i+n+j]="S"+i+"-"+S[i].substring(0,S[i].indexOf(">>"));
+            }
+        }
+        if(!(this.E == null)){
+            for( i = 0 ; i < E.length; i++){
+                temp[i+n+j+k]="E"+i+"-"+E[i].substring(0,E[i].indexOf(">>"));
+            }
         }
         return temp;
     }
@@ -287,11 +326,12 @@ public class RASE extends JFrame implements ActionListener {
             this.dispose();
 
         }
+
         if (a.getSource() == previous) {
             if (Current_pan == null) {
                 Current_pan = new Pan(this.ChoicesToData(this.RASE_List[0]));
                 ind = 0;
-                panel.add(Current_pan);
+                panel.add(Current_pan,BorderLayout.CENTER);
                 panel.updateUI();
             } else {
                 if (Current_pan.GetTopic().equals("none")) {
@@ -319,7 +359,7 @@ public class RASE extends JFrame implements ActionListener {
                         }
                         panel.remove(Current_pan);
                         Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
-                        panel.add(Current_pan);
+                        panel.add(Current_pan,BorderLayout.CENTER);
                         panel.updateUI();
                     }
                 }
@@ -355,7 +395,7 @@ public class RASE extends JFrame implements ActionListener {
                     }
                     panel.remove(Current_pan);
                     Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
-                    panel.add(Current_pan);
+                    panel.add(Current_pan,BorderLayout.CENTER);
                     panel.updateUI();
                 }
             }
@@ -392,7 +432,7 @@ public class RASE extends JFrame implements ActionListener {
                 ind = R.length + A.length + S.length + Integer.valueOf(c2);
             }
             Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
-            panel.add(Current_pan);
+            panel.add(Current_pan,BorderLayout.CENTER);
             panel.updateUI();
         }
     }

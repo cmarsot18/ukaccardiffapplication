@@ -22,7 +22,7 @@ public class Text_Editor extends JFrame  {
     public Text_Editor(Paragraph pParagraph,String init,String name){
         saved=false;
         setLayout(new BorderLayout());
-        JButton save = new JButton("Save and edit RASE");
+        JButton save = new JButton("Save");
         JPanel Panel = new JPanel();
         Panel.setLayout(new GridLayout(1,8));
         JButton Rase = new JButton("Edit RASE");

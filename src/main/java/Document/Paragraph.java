@@ -112,78 +112,102 @@ public class Paragraph extends Section
         String temp;
         while(i.hasNext()){
             temp = i.next();
-            if(!r_data.contains(temp)){
+            if(r_data == null){
                 new_r.add(temp);
+            }else{
+                if(!r_data.contains(temp)){
+                    new_r.add(temp);
+                }
             }
         }
         i = a_html.iterator();
         while(i.hasNext()){
             temp = i.next();
-            if(!a_data.contains(temp)){
+            if(a_data == null){
                 new_a.add(temp);
+            }else{
+                if(!a_data.contains(temp)){
+                    new_a.add(temp);
+                }
             }
         }
         i = s_html.iterator();
         while(i.hasNext()){
             temp = i.next();
-            if(!s_data.contains(temp)){
+            if(s_data == null){
                 new_s.add(temp);
+            }else{
+                if(!s_data.contains(temp)){
+                    new_s.add(temp);
+                }
             }
         }
         i = e_html.iterator();
         while(i.hasNext()){
             temp = i.next();
-            if(!e_data.contains(temp)){
+            if(e_data == null){
                 new_e.add(temp);
+            }else{
+                if(!e_data.contains(temp)){
+                    new_e.add(temp);
+                }
             }
         }
-        i = r_data.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            if(!r_html.contains(temp)){
-                old_r.add(temp);
+        if(!(r_data == null)){
+            i = r_data.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                if(!r_html.contains(temp)){
+                    old_r.add(temp);
+                }
+            }
+            i = old_r.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                this.R = remove(this.R,temp);
             }
         }
-        i = a_data.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            if(!a_html.contains(temp)){
-                old_a.add(temp);
+        if(!(a_data == null)){
+            i = a_data.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                if(!a_html.contains(temp)){
+                    old_a.add(temp);
+                }
+            }
+            i = old_a.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                this.A = remove(this.A,temp);
             }
         }
-        i = s_data.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            if(!s_html.contains(temp)){
-                old_s.add(temp);
+        if(!(s_data == null)){
+            i = s_data.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                if(!s_html.contains(temp)){
+                    old_s.add(temp);
+                }
+            }
+            i = old_s.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                this.S = remove(this.S,temp);
             }
         }
-        i = e_data.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            if(!e_html.contains(temp)){
-                old_e.add(temp);
+        if(!(e_data == null)){
+            i = e_data.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                if(!e_html.contains(temp)){
+                    old_e.add(temp);
+                }
             }
-        }
-        i = old_r.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            this.R = remove(this.R,temp);
-        }
-        i = old_a.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            this.A = remove(this.A,temp);
-        }
-        i = old_s.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            this.S = remove(this.S,temp);
-        }
-        i = old_e.iterator();
-        while(i.hasNext()){
-            temp = i.next();
-            this.E = remove(this.E,temp);
+            i = old_e.iterator();
+            while(i.hasNext()){
+                temp = i.next();
+                this.E = remove(this.E,temp);
+            }
         }
         i =  new_r.iterator();
         String stemp;
@@ -195,7 +219,11 @@ public class Paragraph extends Section
                 pR = pR +"<$>"+ stemp;
             }
             pR = pR.replace("&nbsp;","");
-            this.setR(this.R+"<$>"+pR);
+            if(R.length() == 1){
+                this.setR(pR);
+            }else{
+                this.setR(this.R+"<$>"+pR);
+            }
         }
         i = new_a.iterator();
         if(!new_a.isEmpty()){
@@ -206,7 +234,11 @@ public class Paragraph extends Section
                 pA = pA +"<$>"+ stemp;
             }
             pA = pA.replace("&nbsp;","");
-            this.setA(this.A+"<$>"+pA);
+            if(A.length() == 1){
+                this.setA(pA);
+            }else{
+                this.setA(this.A+"<$>"+pA);
+            }
         }
         i = new_s.iterator();
         if(!new_s.isEmpty()){
@@ -217,7 +249,11 @@ public class Paragraph extends Section
                 pS = pS +"<$>"+ stemp;
             }
             pS = pS.replace("&nbsp;","");
-            this.setS(this.S+"<$>"+pS);
+            if(S.length() == 1){
+                this.setS(pS);
+            }else{
+                this.setS(this.S+"<$>"+pS);
+            }
         }
         i = new_e.iterator();
         if(!new_e.isEmpty()){
@@ -228,68 +264,89 @@ public class Paragraph extends Section
                 pE = pE +"<$>"+ stemp;
             }
             pE = pE.replace("&nbsp;","");
-            this.setE(this.E+"<$>"+pE);
+            if(E.length() == 1){
+                this.setE(pE);
+            }else{
+                this.setE(this.E+"<$>"+pE);
+            }
         }
         this.setText(HTML);
     }
 
     private ArrayList<String> RGetTopics(){
         ArrayList<String> res = new ArrayList<>();
-        int elt = StringUtils.countMatches(this.R, "<$>")+1;
-        int k;
-        int i = R.indexOf(">>");
-        int j = R.indexOf(")<$>(");
-        res.add(R.substring(1,i));
-        for(k=2;k<=elt;k++){
-            i = j + 5;
-            j= R.indexOf(")<$>(", i );
-            res.add(R.substring(i,R.indexOf(">>",i)));
+        if(R.length() == 1){
+            return  null;
+        }else{
+            int elt = StringUtils.countMatches(this.R, "<$>")+1;
+            int k;
+            int i = R.indexOf(">>");
+            int j = R.indexOf(")<$>(");
+            res.add(R.substring(1,i));
+            for(k=2;k<=elt;k++){
+                i = j + 5;
+                j= R.indexOf(")<$>(", i );
+                res.add(R.substring(i,R.indexOf(">>",i)));
+            }
+            return res;
         }
-        return res;
     }
 
     private ArrayList<String> AGetTopics(){
-        ArrayList<String> res = new ArrayList<>();
-        int elt = StringUtils.countMatches(this.A, "<$>")+1;
-        int k;
-        int i = A.indexOf(">>");
-        int j = A.indexOf(")<$>(");
-        res.add(A.substring(1,i));
-        for(k=2;k<=elt;k++){
-            i = j + 5;
-            j= A.indexOf(")<$>(", i );
-            res.add(A.substring(i,A.indexOf(">>",i)));
+        if(A.length() == 1){
+            return null;
+        }else{
+            ArrayList<String> res = new ArrayList<>();
+            int elt = StringUtils.countMatches(this.A, "<$>")+1;
+            int k;
+            int i = A.indexOf(">>");
+            int j = A.indexOf(")<$>(");
+            res.add(A.substring(1,i));
+            for(k=2;k<=elt;k++){
+                i = j + 5;
+                j= A.indexOf(")<$>(", i );
+                res.add(A.substring(i,A.indexOf(">>",i)));
+            }
+            return res;
         }
-        return res;
     }
 
     private ArrayList<String> SGetTopics(){
         ArrayList<String> res = new ArrayList<>();
-        int elt = StringUtils.countMatches(this.S, "<$>")+1;
-        int k;
-        int i = S.indexOf(">>");
-        int j = S.indexOf(")<$>(");
-        res.add(S.substring(1,i));
-        for(k=2;k<=elt;k++){
+        if(S.length()==1){
+            return null;
+        }else{
+            int elt = StringUtils.countMatches(this.S, "<$>")+1;
+            int k;
+            int i = S.indexOf(">>");
+            int j = S.indexOf(")<$>(");
+            res.add(S.substring(1,i));
+            for(k=2;k<=elt;k++){
                 i = j + 5;
                 j= S.indexOf(")<$>(", i );
                 res.add(S.substring(i,S.indexOf(">>",i)));
+            }
+            return res;
         }
-        return res;
     }
     private ArrayList<String> EGetTopics(){
         ArrayList<String> res = new ArrayList<>();
-        int elt = StringUtils.countMatches(this.E, "<$>")+1;
-        int k;
-        int i = E.indexOf(">>");
-        int j = E.indexOf(")<$>(");
-        res.add(E.substring(1,i));
-        for(k=2;k<=elt;k++){
-            i = j + 5;
-            j= E.indexOf(")<$>(", i );
-            res.add(E.substring(i,E.indexOf(">>",i)));
+        if(E.length()==1){
+            return null;
+        }else{
+            int elt = StringUtils.countMatches(this.E, "<$>")+1;
+            int k;
+            int i = E.indexOf(">>");
+            int j = E.indexOf(")<$>(");
+            res.add(E.substring(1,i));
+            for(k=2;k<=elt;k++){
+                i = j + 5;
+                j= E.indexOf(")<$>(", i );
+                res.add(E.substring(i,E.indexOf(">>",i)));
+            }
+            return res;
+
         }
-        return res;
     }
 
     public static String remove(String RASE, String Topic){

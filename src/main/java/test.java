@@ -53,10 +53,10 @@ public class test{
 //        text1.SetName("text1");
 //        text2.SetName("text2");
 //        text3.SetName("text3");
-        text1.setA("(vert1>>n>>ne>>prout>>no)");
-        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>test>>v>>none)");
-        text1.setR("(rouge1>>e>>no>>ne>>noe)");
-        text1.setS("(rose1>>a>>a>>onen>>nae)");
+//        text1.setA("(vert1>>n>>ne>>prout>>no)");
+//        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>test>>v>>none)");
+//        text1.setR("(rouge1>>e>>no>>ne>>noe)");
+//        text1.setS("(rose1>>a>>a>>onen>>nae)");
 //        text1.setText("rase1");
 //        text2.setA("a2");
 //        text2.setE("e2");
@@ -95,6 +95,7 @@ public class test{
 //        System.out.println(text1.getA());
 //        System.out.println(text1.getS());
 //        System.out.println(text1.getE());
+        text1.update("");
 //        text1.update("<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><span style=\"background-color: rgb(255, 0, 0);\">rouge1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(255, 0, 255);\">rose1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 0);\">vert1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 255);\">bleu1</span></p></body></html>    <span style=\"background-color: rgb(255, 0, 0);\">op</span>");
 //        System.out.println("---------------------------------");
 //        System.out.println(text1.getR());

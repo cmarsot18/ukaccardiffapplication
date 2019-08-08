@@ -14,6 +14,9 @@ import com.orientechnologies.orient.core.record.ODirection;
 import com.orientechnologies.orient.core.record.OEdge;
 import com.orientechnologies.orient.core.record.OVertex;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
+import org.apache.commons.lang3.StringUtils;
+import Windows.RASE;
+
 import java.util.*;
 
 
@@ -50,17 +53,23 @@ public class DB
     public OrientDB getDatabase(){
         return this.Database;
     }
+
     public void SaveNewDocument(Section root,String Login,String Password){
-        this.Database.create(root.Getname(),ODatabaseType.PLOCAL);
-        ODatabaseDocument document = Database.open(root.Getname(),Login,Password);
+        this.Database.create(root.Getname().replace(" ",""),ODatabaseType.PLOCAL);
+        ODatabaseDocument document = Database.open(root.Getname().replace(" ",""),Login,Password);
 
         OClass Section = document.createVertexClass("Section");
         OClass Paragraph = document.createVertexClass("Paragraph");
-        SectionToVertex(root,document,Paragraph,Section);
+        OClass Topic = document.createVertexClass("Topic");
+        OClass R_RASE = document.createVertexClass("R_RASE");
+        OClass A_RASE = document.createVertexClass("A_RASE");
+        OClass S_RASE = document.createVertexClass("S_RASE");
+        OClass E_RASE = document.createVertexClass("E_RASE");
+        SectionToVertex(root,document,Paragraph,Section,R_RASE,A_RASE,S_RASE,E_RASE,Topic);
         document.close();
     }
 
-    public OVertex SectionToVertex(Section pSection, ODatabaseDocument document,OClass Paragraph ,OClass Section ){
+    public OVertex SectionToVertex(Section pSection, ODatabaseDocument document,OClass Paragraph ,OClass Section, OClass pR, OClass pA, OClass pS, OClass pE,OClass Topic ){
         if(pSection instanceof Paragraph){
             OVertex v = document.newVertex(Paragraph);
             v.setProperty("name",pSection.Getname());
@@ -69,6 +78,150 @@ public class DB
             v.setProperty("S",((Paragraph) pSection).getS());
             v.setProperty("E",((Paragraph) pSection).getE());
             v.setProperty("Text",((Paragraph) pSection).getText());
+            if(((Paragraph) pSection).getR().length() != 1){
+                OVertex R = document.newVertex(pR);
+                R.save();
+                OEdge etemp = document.newEdge(v,R);
+                etemp.save();
+                String r = ((Paragraph) pSection).getR();
+                String[] Topics = RASE.DataToUI(r);
+                int i,j,k;
+                i=0;
+                String stemp;
+                OVertex vtemp;
+                for(k = 0; k < Topics.length ; k++ ){
+                    vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Topic",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Properties",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Comparison",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Value",stemp);
+                    i=j+2;
+                    stemp = Topics[k].substring(i);
+                    vtemp.setProperty("Unit",stemp);
+                    etemp = document.newEdge(R,vtemp);
+                    etemp.save();
+                    vtemp.save();
+                }
+            }
+            if(((Paragraph) pSection).getA().length() != 1){
+                OVertex A = document.newVertex(pA);
+                A.save();
+                OEdge etemp = document.newEdge(v,A);
+                etemp.save();
+                String a = ((Paragraph) pSection).getA();
+                String[] Topics = RASE.DataToUI(a);
+                int i,j,k;
+                i=0;
+                String stemp;
+                OVertex vtemp;
+                for(k = 0; k < Topics.length ; k++ ){
+                    vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Topic",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Properties",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Comparison",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Value",stemp);
+                    i=j+2;
+                    stemp = Topics[k].substring(i);
+                    vtemp.setProperty("Unit",stemp);
+                    etemp = document.newEdge(A,vtemp);
+                    etemp.save();
+                    vtemp.save();
+                }
+            }
+            if(((Paragraph) pSection).getS().length() != 1){
+                OVertex S  = document.newVertex(pS);
+                S.save();
+                OEdge etemp = document.newEdge(v,S);
+                etemp.save();
+                String s = ((Paragraph) pSection).getS();
+                String[] Topics = RASE.DataToUI(s);
+                int i,j,k;
+                i=0;
+                String stemp;
+                OVertex vtemp;
+                for(k = 0; k < Topics.length ; k++ ){
+                    vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Topic",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Properties",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Comparison",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Value",stemp);
+                    i=j+2;
+                    stemp = Topics[k].substring(i);
+                    vtemp.setProperty("Unit",stemp);
+                    etemp = document.newEdge(S,vtemp);
+                    etemp.save();
+                    vtemp.save();
+                }
+            }
+            if(((Paragraph) pSection).getE().length() != 1){
+                OVertex E = document.newVertex(pE);
+                E.save();
+                OEdge etemp = document.newEdge(v,E);
+                etemp.save();
+                String e = ((Paragraph) pSection).getE();
+                String[] Topics = RASE.DataToUI(e);
+                int i,j,k;
+                i=0;
+                String stemp;
+                OVertex vtemp;
+                for(k = 0; k < Topics.length ; k++ ){
+                    vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Topic",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Properties",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Comparison",stemp);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
+                    stemp = Topics[k].substring(i,j);
+                    vtemp.setProperty("Value",stemp);
+                    i=j+2;
+                    stemp = Topics[k].substring(i);
+                    vtemp.setProperty("Unit",stemp);
+                    etemp = document.newEdge(E,vtemp);
+                    etemp.save();
+                    vtemp.save();
+                }
+            }
             v.save();
             return v;
         }else{
@@ -83,7 +236,7 @@ public class DB
             int i;
             for(i=0;i<pSection.GetSuccessors().size();i++){
                 Section stemp = pSection.GetSuccessors().get(i);
-                OVertex vtemp = this.SectionToVertex(stemp,document,Paragraph,Section);
+                OVertex vtemp = this.SectionToVertex(stemp,document,Paragraph,Section,pR,pA,pS,pE,Topic);
                 OEdge etemp = document.newEdge(v,vtemp);
                 etemp.save();
             }
@@ -135,5 +288,6 @@ public class DB
         }
 
     }
+
 
 }
