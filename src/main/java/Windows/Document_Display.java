@@ -26,6 +26,7 @@ public class Document_Display extends JFrame implements ActionListener {
     private JButton New_Paragraph = new JButton("New paragraph");
     private  JButton Editing = new JButton("Edit");
     private JButton Delete = new JButton("Delete");
+    private JButton Move = new JButton("Move ");
     private  JTree Document;
     public Section root;
     private String selected;
@@ -53,16 +54,18 @@ public class Document_Display extends JFrame implements ActionListener {
         Document = new JTree(displaydocument(root));
         this.expandAllNodes(Document);
         pan.setLayout(new BorderLayout());
-        pan2.setLayout(new GridLayout(1,4));
+        pan2.setLayout(new GridLayout(1,5));
         pan2.add(Commit);
         pan2.add(New_Section);
         pan2.add(New_Paragraph);
         pan2.add(Editing);
+        pan2.add(Move);
         pan2.add(Delete);
         Editing.addActionListener(this);
         Commit.addActionListener(this);
         New_Paragraph.addActionListener(this);
         New_Section.addActionListener(this);
+        Move.addActionListener(this);
         Delete.addActionListener(this);
         pan.add(pan2,BorderLayout.NORTH);
         pan.add(Document,BorderLayout.CENTER);
@@ -227,9 +230,23 @@ public class Document_Display extends JFrame implements ActionListener {
             }
             this.refresh();
             this.saved=false;
-
-
         }
+        if(a.getSource() == Move){
+            Section temp = root.GetSectionFromRoot(selected);
+            int NumberOfSuccessors = temp.GetPredecessor().GetSuccessors().size();
+            double number = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter the new subsection number"));
+            int num = (int) number;
+            System.out.println(num);
+            System.out.println(NumberOfSuccessors);
+            if(num > NumberOfSuccessors){
+                JOptionPane jop3 = new JOptionPane();
+                jop3.showMessageDialog(null, "Enter a lower number ", "Wrong number", JOptionPane.ERROR_MESSAGE);
+            }else{
+                temp.GetPredecessor().MoveSuccessor(temp.GetSubsectionNumber(),num);
+                this.refresh();
+            }
+        }
+
         if(a.getSource() == Delete){
             Section Selected = root.GetSectionFromRoot(selected);
             if(Selected == root){
