@@ -54,7 +54,7 @@ public class Document_Display extends JFrame implements ActionListener {
         Document = new JTree(displaydocument(root));
         this.expandAllNodes(Document);
         pan.setLayout(new BorderLayout());
-        pan2.setLayout(new GridLayout(1,5));
+        pan2.setLayout(new GridLayout(1,6));
         pan2.add(Commit);
         pan2.add(New_Section);
         pan2.add(New_Paragraph);

@@ -75,17 +75,15 @@ public class Section
 
     public void MoveSuccessor(int indexFrom,int IndexTo) {
         Section S = this.Successors.get(indexFrom-1);
-        this.Successors.remove(indexFrom-1);
+        this.Successors.remove(S);
         this.Successors.add(IndexTo-1,S);
-        int i;
-        int max=Successors.size()-1;
-        for (i= indexFrom; i <=IndexTo-1; i++){
-            S = Successors.get(i);
-            S.SetSubsectionNumber(S.GetSubsectionNumber()-1);
-        }
-        for(i=IndexTo+1;i <= max; i++){
-            S = Successors.get(i);
-            S.SetSubsectionNumber(S.GetSubsectionNumber()+1);
+        Iterator<Section> I = this.Successors.iterator();
+        int k = 1;
+        Section stemp;
+        while (I.hasNext()){
+            stemp = I.next();
+            stemp.SetSubsectionNumber(k);
+            k++;
         }
     }
 

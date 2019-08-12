@@ -3,6 +3,7 @@ package Windows;
 import javax.swing.*;
 
 import Document.Paragraph;
+import Document.Section;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.HTMLEditor;
@@ -34,6 +35,19 @@ public class Text_Editor extends JFrame  {
                 new RASE(pParagraph);
             }
         });
+        JButton rename = new JButton("Rename");
+        rename.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane jop = new JOptionPane();
+                String name = jop.showInputDialog(null, "Enter the new name", "Renaming", JOptionPane.QUESTION_MESSAGE);
+                if(name != null) {
+                    pParagraph.SetName(name);
+                    setTitle(name);
+                }
+            }
+        });
+        Panel.add(rename);
         Panel.add(save);
         Panel.add(Rase);
         Panel.add(new JLabel("Color correspondences : ",JLabel.CENTER));
@@ -60,6 +74,8 @@ public class Text_Editor extends JFrame  {
             public void actionPerformed(ActionEvent e) {
                 saved=true;
                 pParagraph.update(getHtmlText());
+                JOptionPane jop3 = new JOptionPane();
+                jop3.showMessageDialog(null, "Successfully saved", "Save", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         add(fxPanel,BorderLayout.CENTER);
