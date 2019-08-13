@@ -1,7 +1,6 @@
-package Windows;
+package app.Windows;
 
-import Document.Paragraph;
-import DB.DB;
+import app.DB.DB;
 
 import javax.swing.*;
 import java.awt.*;

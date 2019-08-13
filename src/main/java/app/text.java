@@ -1,6 +1,7 @@
-import Document.Paragraph;
-import Windows.Document_Display;
-import Windows.Text_Editor;
+package app;
+
+import app.Document.Paragraph;
+import app.Windows.Text_Editor;
 
 
 public class text {

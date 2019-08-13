@@ -1,4 +1,4 @@
-package Document;
+package app.Document;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public class Paragraph extends Section
         A = "a";
         S = "s";
         E = "e";
-        this.text = "text";
+        this.text = "app.text";
     }
     public Paragraph(String pName, Section pPredecessor, ArrayList pSuccessors, String r, String a, String s, String e, String text) {
         super(pName, pPredecessor,pSuccessors);

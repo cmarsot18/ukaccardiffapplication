@@ -1,7 +1,6 @@
-package Windows;
+package app.Windows;
 
-import com.orientechnologies.orient.core.db.OrientDB;
-import DB.DB;
+import app.DB.DB;
 
 import java.awt.event.*;
 import java.util.Iterator;

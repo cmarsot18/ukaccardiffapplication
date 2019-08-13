@@ -1,8 +1,8 @@
-package Windows;
+package app.Windows;
 
-import DB.DB;
-import Document.Paragraph;
-import Document.Section;
+import app.DB.DB;
+import app.Document.Paragraph;
+import app.Document.Section;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -10,12 +10,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.*;
-import Windows.Text_Editor;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 
 public class Document_Display extends JFrame implements ActionListener {

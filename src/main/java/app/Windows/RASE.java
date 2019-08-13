@@ -1,6 +1,6 @@
-package Windows;
+package app.Windows;
 
-import Document.Paragraph;
+import app.Document.Paragraph;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

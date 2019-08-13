@@ -1,9 +1,7 @@
-import Document.Paragraph;
-import Document.Section;
-import Windows.*;
-import DB.DB;
+package app;
 
-import java.util.ArrayList;
+import app.Document.Paragraph;
+import app.Windows.*;
 
 
 public class test{
@@ -54,7 +52,7 @@ public class test{
 //        text2.SetName("text2");
 //        text3.SetName("text3");
 //        text1.setA("(vert1>>n>>ne>>prout>>no)");
-//        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>test>>v>>none)");
+//        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>app.test>>v>>none)");
 //        text1.setR("(rouge1>>e>>no>>ne>>noe)");
 //        text1.setS("(rose1>>a>>a>>onen>>nae)");
 //        text1.setText("rase1");
@@ -68,18 +66,18 @@ public class test{
 //        text3.setR("r3");
 //        text3.setS("s3");
 //        text3.setText("rase3");
-//        DB test= new DB();
-//        boolean Connection = test.Connection("remote:localhost","root","password");
-//        if(test.getDatabase().exists("doc")){
-//            test.getDatabase().drop("doc");
-//            test.getDatabase().drop("DocBis");
+//        app.DB app.test= new app.DB();
+//        boolean Connection = app.test.Connection("remote:localhost","root","password");
+//        if(app.test.getDatabase().exists("doc")){
+//            app.test.getDatabase().drop("doc");
+//            app.test.getDatabase().drop("DocBis");
 //            System.out.println("b");
 //        }
 //        if (Connection){
-//            test.SaveNewDocument(root,"admin","admin");
-//            Section load = test.LoadDocument("doc","admin","admin");
+//            app.test.SaveNewDocument(root,"admin","admin");
+//            Section load = app.test.LoadDocument("doc","admin","admin");
 //            load.SetName("DocBis");
-//            test.SaveNewDocument(load,"admin","admin");
+//            app.test.SaveNewDocument(load,"admin","admin");
 //            System.out.println("success");
 //        }else{
 //            System.out.println("fail");
@@ -88,7 +86,7 @@ public class test{
         //new Document_Display(root);
 //    new Doc_Creation();
     new Connection();
-//        new Document_Select(test);
+//        new Document_Select(app.test);
 
 //        new RASE(text1);
 //        System.out.println(text1.getR());

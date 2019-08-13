@@ -1,9 +1,7 @@
-package DB;
+package app.DB;
 
-import Document.Paragraph;
-import Document.Section;
-import com.orientechnologies.orient.core.Orient;
-import com.orientechnologies.orient.core.db.ODatabase;
+import app.Document.Paragraph;
+import app.Document.Section;
 import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
@@ -14,8 +12,7 @@ import com.orientechnologies.orient.core.record.ODirection;
 import com.orientechnologies.orient.core.record.OEdge;
 import com.orientechnologies.orient.core.record.OVertex;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
-import org.apache.commons.lang3.StringUtils;
-import Windows.RASE;
+import app.Windows.RASE;
 
 import java.util.*;
 

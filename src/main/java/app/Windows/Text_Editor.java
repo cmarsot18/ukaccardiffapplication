@@ -1,9 +1,8 @@
-package Windows;
+package app.Windows;
 
 import javax.swing.*;
 
-import Document.Paragraph;
-import Document.Section;
+import app.Document.Paragraph;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.HTMLEditor;

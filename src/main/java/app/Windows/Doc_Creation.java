@@ -1,7 +1,7 @@
-package Windows;
+package app.Windows;
 
-import DB.DB;
-import Document.*;
+import app.DB.DB;
+import app.Document.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -1,6 +1,6 @@
-package Windows;
+package app.Windows;
 
-import DB.DB;
+import app.DB.DB;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
