@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class RASE extends JFrame implements ActionListener {
@@ -75,13 +74,18 @@ public class RASE extends JFrame implements ActionListener {
         private JTextField Comparison;
         private JTextField Value;
         private JTextField Unit;
+        private JTextField Word;
 
         public Pan(String pstring){
-            this.setLayout(new GridLayout(5,2));
+            this.setLayout(new GridLayout(6,2));
             String temp;
             int i,j=0;
             i=pstring.indexOf(">>");
             temp = pstring.substring(j,i);
+            this.add(new JLabel(" Word in text :",JLabel.CENTER));
+            Word = new JTextField(temp);
+            Word.setEditable(false);
+            this.add(Word);
             if(temp.equals("none")){
                 Topic = new JTextField();
             }else{
