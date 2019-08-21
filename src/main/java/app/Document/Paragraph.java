@@ -212,10 +212,10 @@ public class Paragraph extends Section
         i =  new_r.iterator();
         String stemp;
         if(!new_r.isEmpty()){
-            stemp = "("+ i.next()+">>none>>none>>none>>none)";
+            stemp = "("+ i.next()+">>none>>none>>none>>none>>none)";
             pR = stemp;
             while(i.hasNext()){
-                stemp ="("+ i.next()+">>none>>none>>none>>none)";
+                stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
                 pR = pR +"<$>"+ stemp;
             }
             pR = pR.replace("&nbsp;","");
@@ -227,10 +227,10 @@ public class Paragraph extends Section
         }
         i = new_a.iterator();
         if(!new_a.isEmpty()){
-            stemp ="("+ i.next()+">>none>>none>>none>>none)";
+            stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
             pA = stemp;
             while(i.hasNext()){
-                stemp ="("+ i.next()+">>none>>none>>none>>none)";
+                stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
                 pA = pA +"<$>"+ stemp;
             }
             pA = pA.replace("&nbsp;","");
@@ -242,10 +242,10 @@ public class Paragraph extends Section
         }
         i = new_s.iterator();
         if(!new_s.isEmpty()){
-            stemp ="("+ i.next()+">>none>>none>>none>>none)";
+            stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
             pS = stemp;
             while(i.hasNext()){
-                stemp ="("+ i.next()+">>none>>none>>none>>none)";
+                stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
                 pS = pS +"<$>"+ stemp;
             }
             pS = pS.replace("&nbsp;","");
@@ -257,10 +257,10 @@ public class Paragraph extends Section
         }
         i = new_e.iterator();
         if(!new_e.isEmpty()){
-            stemp ="("+ i.next()+">>none>>none>>none>>none)";
+            stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
             pE = stemp;
             while(i.hasNext()){
-                stemp ="("+ i.next()+">>none>>none>>none>>none)";
+                stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
                 pE = pE +"<$>"+ stemp;
             }
             pE = pE.replace("&nbsp;","");

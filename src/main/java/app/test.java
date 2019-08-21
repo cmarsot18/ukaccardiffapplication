@@ -85,15 +85,16 @@ public class test{
 
         //new Document_Display(root);
 //    new Doc_Creation();
-    new Connection();
+//    new Connection();
 //        new Document_Select(app.test);
-
+        Text_Editor test =  new Text_Editor(text1,"","test");
+            test.setVisible(true);
 //        new RASE(text1);
 //        System.out.println(text1.getR());
 //        System.out.println(text1.getA());
 //        System.out.println(text1.getS());
 //        System.out.println(text1.getE());
-        text1.update("");
+//        text1.update("");
 //        text1.update("<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><span style=\"background-color: rgb(255, 0, 0);\">rouge1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(255, 0, 255);\">rose1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 0);\">vert1</span></p><p>Du texte pour rien</p><p><span style=\"background-color: rgb(0, 255, 255);\">bleu1</span></p></body></html>    <span style=\"background-color: rgb(255, 0, 0);\">op</span>");
 //        System.out.println("---------------------------------");
 //        System.out.println(text1.getR());

@@ -77,6 +77,7 @@ public class RASE extends JFrame implements ActionListener {
         private JTextField Word;
 
         public Pan(String pstring){
+            System.out.println(pstring);
             this.setLayout(new GridLayout(6,2));
             String temp;
             int i,j=0;
@@ -86,6 +87,9 @@ public class RASE extends JFrame implements ActionListener {
             Word = new JTextField(temp);
             Word.setEditable(false);
             this.add(Word);
+            i=i+2;
+            j=pstring.indexOf(">>",i+1);
+            temp = pstring.substring(i,j);
             if(temp.equals("none")){
                 Topic = new JTextField();
             }else{
@@ -93,7 +97,7 @@ public class RASE extends JFrame implements ActionListener {
             }
             this.add(new JLabel("Topic :",JLabel.CENTER));
             this.add(Topic);
-            i=i+2;
+            i=j+2;
             j=pstring.indexOf(">>",i+1);
             temp = pstring.substring(i,j);
             if(temp.equals("none")){
@@ -133,6 +137,11 @@ public class RASE extends JFrame implements ActionListener {
             }
             this.add(new JLabel("Unit :",JLabel.CENTER));
             this.add(Unit);
+        }
+
+        public String GetWord(){
+            String temp = Word.getText();
+            return temp;
         }
 
         public String GetTopic(){
@@ -314,19 +323,20 @@ public class RASE extends JFrame implements ActionListener {
                 String c1 = RASE_List[ind].substring(0, 1);
                 String c2 = RASE_List[ind].substring(1, 2);
                 if (c1.equals("R")) {
-                    this.R[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                 }
                 if (c1.equals("A")) {
-                    this.A[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                 }
                 if (c1.equals("S")) {
-                    this.S[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                 }
                 if (c1.equals("E")) {
-                    this.E[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                 }
             }
             this.UIToData();
+            System.out.println(Data.getR());
             this.dispose();
 
         }
@@ -345,16 +355,16 @@ public class RASE extends JFrame implements ActionListener {
                     String c1 = RASE_List[ind].substring(0, 1);
                     String c2 = RASE_List[ind].substring(1, 2);
                     if (c1.equals("R")) {
-                        this.R[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                     }
                     if (c1.equals("A")) {
-                        this.A[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                     }
                     if (c1.equals("S")) {
-                        this.S[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                     }
                     if (c1.equals("E")) {
-                        this.E[Integer.valueOf(c2)] = Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
                     }
                         if (ind == 0) {
                             ind = max - 1;
@@ -384,13 +394,13 @@ public class RASE extends JFrame implements ActionListener {
                     String c1 = RASE_List[ind].substring(0,1);
                     String c2 = RASE_List[ind].substring(1,2);
                     if(c1.equals("R")){
-                        this.R[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                     }if(c1.equals("A")){
-                        this.A[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                     }if(c1.equals("S")){
-                        this.S[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                     }if(c1.equals("E")) {
-                        this.E[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                     }
                     if(ind == max-1){
                         ind = 0;
@@ -409,13 +419,13 @@ public class RASE extends JFrame implements ActionListener {
                 String c1 = RASE_List[ind].substring(0,1);
                 String c2 = RASE_List[ind].substring(1,2);
                 if(c1.equals("R")){
-                    this.R[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                 }if(c1.equals("A")){
-                    this.A[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                 }if(c1.equals("S")){
-                    this.S[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                 }if(c1.equals("E")) {
-                    this.E[Integer.valueOf(c2)] = Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+                    this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
                 }
                 panel.remove(Current_pan);
             }
