@@ -29,9 +29,22 @@ public class Text_Editor extends JFrame  {
         Rase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(saved){
+                    pParagraph.update(getHtmlText());
+                    new RASE(pParagraph);
+                }else{
+                    JOptionPane jop3 = new JOptionPane();
+                    jop3.showMessageDialog(null, "You need to save first", "Saving state", JOptionPane.INFORMATION_MESSAGE);
+                }
+                saved=false;
+            }
+        });
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 saved=true;
                 pParagraph.update(getHtmlText());
-                new RASE(pParagraph);
+                JOptionPane jop3 = new JOptionPane();
+                jop3.showMessageDialog(null, "Successfully saved", "Save", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         JButton rename = new JButton("Rename");
@@ -69,14 +82,6 @@ public class Text_Editor extends JFrame  {
         setTitle(name);
         JFXPanel fxPanel = new JFXPanel();
         add(Panel,BorderLayout.NORTH);
-        save.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                saved=true;
-                pParagraph.update(getHtmlText());
-                JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, "Successfully saved", "Save", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
         add(fxPanel,BorderLayout.CENTER);
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

@@ -85,10 +85,10 @@ public class test{
 
         //new Document_Display(root);
 //    new Doc_Creation();
-//    new Connection();
+    new Connection();
 //        new Document_Select(app.test);
-        Text_Editor test =  new Text_Editor(text1,"","test");
-            test.setVisible(true);
+//        Text_Editor test =  new Text_Editor(text1,"","test");
+//            test.setVisible(true);
 //        new RASE(text1);
 //        System.out.println(text1.getR());
 //        System.out.println(text1.getA());
