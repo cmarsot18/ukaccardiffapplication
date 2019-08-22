@@ -83,10 +83,10 @@ public class DB
                 String r = ((Paragraph) pSection).getR();
                 String[] Topics = RASE.DataToUI(r);
                 int i,j,k;
-                i=0;
                 String stemp;
                 OVertex vtemp;
                 for(k = 0; k < Topics.length ; k++ ){
+                    i=0;
                     vtemp = document.newVertex(Topic);
                     j = Topics[k].indexOf(">>",i);
                     i=j+2;
@@ -121,11 +121,13 @@ public class DB
                 String a = ((Paragraph) pSection).getA();
                 String[] Topics = RASE.DataToUI(a);
                 int i,j,k;
-                i=0;
                 String stemp;
                 OVertex vtemp;
                 for(k = 0; k < Topics.length ; k++ ){
+                    i=0;
                     vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    i=j+2;
                     j = Topics[k].indexOf(">>",i);
                     stemp = Topics[k].substring(i,j);
                     vtemp.setProperty("Topic",stemp);
@@ -157,11 +159,13 @@ public class DB
                 String s = ((Paragraph) pSection).getS();
                 String[] Topics = RASE.DataToUI(s);
                 int i,j,k;
-                i=0;
                 String stemp;
                 OVertex vtemp;
                 for(k = 0; k < Topics.length ; k++ ){
+                    i=0;
                     vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    i=j+2;
                     j = Topics[k].indexOf(">>",i);
                     stemp = Topics[k].substring(i,j);
                     vtemp.setProperty("Topic",stemp);
@@ -197,7 +201,10 @@ public class DB
                 String stemp;
                 OVertex vtemp;
                 for(k = 0; k < Topics.length ; k++ ){
+                    i=0;
                     vtemp = document.newVertex(Topic);
+                    j = Topics[k].indexOf(">>",i);
+                    i=j+2;
                     j = Topics[k].indexOf(">>",i);
                     stemp = Topics[k].substring(i,j);
                     vtemp.setProperty("Topic",stemp);
@@ -288,6 +295,40 @@ public class DB
 
     }
 
+    public ArrayList<OVertex> Make_rules_list(String DocName,String Login,String Password){
+        ArrayList<OVertex> res = new ArrayList<>();
+        ODatabaseDocument Doc = Database.open(DocName,Login,Password);
+        OResultSet tryroot =  Doc.query("SELECT * FROM V WHERE PredecessorName = \"root_init_doc\"");
+        String rid =  tryroot.next().getProperty("@rid").toString();
+        ORecordId id = new ORecordId(rid);
+        OVertex root = Doc.getRecord(id);
+        Listing_Vertex(res,root);
+        Iterator<OVertex> temp = res.iterator();
+        OVertex vtemp;
+        while(temp.hasNext()){
+            vtemp = temp.next();
+//            System.out.println(vtemp.getProperty("name").toString());
+        }
+        return res;
+    }
 
+    private static void Listing_Vertex(ArrayList<OVertex> list, OVertex V){
+        Iterable<OVertex> Successors=V.getVertices(ODirection.OUT);
+        String temp = V.getProperty("@class").toString();
+        if(temp.equals("Paragraph")) {
+            list.add(V);
+        }else {
+            Iterator<OVertex> I = Successors.iterator();
+            OVertex vtemp;
+            list.add(V);
+            while(I.hasNext()) {
+                vtemp = I.next();
+                Listing_Vertex(list,vtemp);
+            }
+
+        }
+    }
 
 }
+
+

@@ -7,35 +7,43 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import app.DB.*;
 
 public class rules_writer {
    public static void main(String[] args) {
-        File file = new File("test.txt");
+        File file = new File("v.txt");
         try{
-            System.out.println("test    ");
+            DB test = new DB();
             FileWriter writer = new FileWriter(file);
-            StringBuffer buf = new StringBuffer();
-
-
-
-
-
-
-
-
-
-
-
-
-            writer.write(buf.toString());
+            test.Connection("remote:localhost","root","password");
+            ArrayList<OVertex> temp= test.Make_rules_list("CodeforSustainableHomes","admin","admin");
+            Collections.reverse(temp);
+            Iterator<OVertex> I = temp.iterator();
+            OVertex vtemp;
+            String vclass;
+            while(I.hasNext()){
+                vtemp = I.next();
+                vclass = vtemp.getProperty("@class").toString();
+                if(vclass.equals("Section")){
+                    writer.write(Write_Section(vtemp));
+                    writer.write(System.lineSeparator());
+                    writer.write(System.lineSeparator());
+                }else{
+                    writer.write(Write_Paragraph(vtemp));
+                    writer.write(System.lineSeparator());
+                    writer.write(System.lineSeparator());
+                }
+            }
             writer.close();
         }catch(IOException e){
             e.printStackTrace();
         }
 
    }
-   public String Write_Paragraph (OVertex pParagraph){
+   public static String Write_Paragraph (OVertex pParagraph){
        StringBuffer res = new StringBuffer();
        StringBuffer Rlist = new StringBuffer();
        StringBuffer Alist = new StringBuffer();
@@ -69,38 +77,48 @@ public class rules_writer {
        if(R != null){
            Successors = R.getVertices(ODirection.OUT);
            I = Successors.iterator();
-           Rlist.append("(");
+           vtemp = I.next();
+           temp = "("+vtemp.getProperty("Topic").toString()+".";
+           if(!vtemp.getProperty("Properties").toString().equals("none")){
+               temp = temp+" "+vtemp.getProperty("Properties").toString();
+           }
+           if(!vtemp.getProperty("Comparison").toString().equals("none")){
+               temp = temp + " " + vtemp.getProperty("Comparison").toString();
+           }
+           if(!vtemp.getProperty("Value").toString().equals("none")){
+               temp = temp + " " + vtemp.getProperty("Value").toString();
+           }
+           temp = temp +")";
+           Rlist.append(temp);
            while(I.hasNext()){
                vtemp = I.next();
                temp = "("+vtemp.getProperty("Topic").toString()+".";
-               if(vtemp.getProperty("Properties").toString().equals("none")){
+               if(!vtemp.getProperty("Properties").toString().equals("none")){
                    temp = temp+" "+vtemp.getProperty("Properties").toString();
                }
-               if(vtemp.getProperty("Comparison").toString().equals("none")){
+               if(!vtemp.getProperty("Comparison").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Comparison").toString();
                }
-               if(vtemp.getProperty("Value").toString().equals("none")){
+               if(!vtemp.getProperty("Value").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Value").toString();
                }
                temp = temp +")";
                Rlist.append(" and ");
                Rlist.append(temp);
            }
-           Rlist.append(")");
        }
        if(A != null){
            Successors = A.getVertices(ODirection.OUT);
            I = Successors.iterator();
-           Alist.append("(");
            vtemp = I.next();
            temp = "("+vtemp.getProperty("Topic").toString()+".";
-           if(vtemp.getProperty("Properties").toString().equals("none")){
+           if(!vtemp.getProperty("Properties").toString().equals("none")){
                temp = temp+" "+vtemp.getProperty("Properties").toString();
            }
-           if(vtemp.getProperty("Comparison").toString().equals("none")){
+           if(!vtemp.getProperty("Comparison").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Comparison").toString();
            }
-           if(vtemp.getProperty("Value").toString().equals("none")){
+           if(!vtemp.getProperty("Value").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Value").toString();
            }
            temp = temp +")";
@@ -108,34 +126,32 @@ public class rules_writer {
            while(I.hasNext()){
                vtemp = I.next();
                temp = "("+vtemp.getProperty("Topic").toString()+".";
-               if(vtemp.getProperty("Properties").toString().equals("none")){
+               if(!vtemp.getProperty("Properties").toString().equals("none")){
                    temp = temp+" "+vtemp.getProperty("Properties").toString();
                }
-               if(vtemp.getProperty("Comparison").toString().equals("none")){
+               if(!vtemp.getProperty("Comparison").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Comparison").toString();
                }
-               if(vtemp.getProperty("Value").toString().equals("none")){
+               if(!vtemp.getProperty("Value").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Value").toString();
                }
                temp = temp +")";
                Alist.append(" and ");
                Alist.append(temp);
            }
-           Alist.append(")");
        }
        if(S != null){
            Successors = S.getVertices(ODirection.OUT);
            I = Successors.iterator();
-           Slist.append("(");
            vtemp = I.next();
            temp = "("+vtemp.getProperty("Topic").toString()+".";
-           if(vtemp.getProperty("Properties").toString().equals("none")){
+           if(!vtemp.getProperty("Properties").toString().equals("none")){
                temp = temp+" "+vtemp.getProperty("Properties").toString();
            }
-           if(vtemp.getProperty("Comparison").toString().equals("none")){
+           if(!vtemp.getProperty("Comparison").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Comparison").toString();
            }
-           if(vtemp.getProperty("Value").toString().equals("none")){
+           if(!vtemp.getProperty("Value").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Value").toString();
            }
            temp = temp +")";
@@ -143,34 +159,32 @@ public class rules_writer {
            while(I.hasNext()){
                vtemp = I.next();
                temp = "("+vtemp.getProperty("Topic").toString()+".";
-               if(vtemp.getProperty("Properties").toString().equals("none")){
+               if(!vtemp.getProperty("Properties").toString().equals("none")){
                    temp = temp+" "+vtemp.getProperty("Properties").toString();
                }
-               if(vtemp.getProperty("Comparison").toString().equals("none")){
+               if(!vtemp.getProperty("Comparison").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Comparison").toString();
                }
-               if(vtemp.getProperty("Value").toString().equals("none")){
+               if(!vtemp.getProperty("Value").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Value").toString();
                }
                temp = temp +")";
                Slist.append(" or ");
                Slist.append(temp);
            }
-           Slist.append(")");
        }
        if(E != null){
            Successors = E.getVertices(ODirection.OUT);
            I = Successors.iterator();
-           Elist.append("(");
            vtemp = I.next();
            temp = "("+vtemp.getProperty("Topic").toString()+".";
-           if(vtemp.getProperty("Properties").toString().equals("none")){
+           if(!vtemp.getProperty("Properties").toString().equals("none")){
                temp = temp+" "+vtemp.getProperty("Properties").toString();
            }
-           if(vtemp.getProperty("Comparison").toString().equals("none")){
+           if(!vtemp.getProperty("Comparison").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Comparison").toString();
            }
-           if(vtemp.getProperty("Value").toString().equals("none")){
+           if(!vtemp.getProperty("Value").toString().equals("none")){
                temp = temp + " " + vtemp.getProperty("Value").toString();
            }
            temp = temp +")";
@@ -178,20 +192,19 @@ public class rules_writer {
            while(I.hasNext()){
                vtemp = I.next();
                temp = "("+vtemp.getProperty("Topic").toString()+".";
-               if(vtemp.getProperty("Properties").toString().equals("none")){
+               if(!vtemp.getProperty("Properties").toString().equals("none")){
                    temp = temp+" "+vtemp.getProperty("Properties").toString();
                }
-               if(vtemp.getProperty("Comparison").toString().equals("none")){
+               if(!vtemp.getProperty("Comparison").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Comparison").toString();
                }
-               if(vtemp.getProperty("Value").toString().equals("none")){
+               if(!vtemp.getProperty("Value").toString().equals("none")){
                    temp = temp + " " + vtemp.getProperty("Value").toString();
                }
                temp = temp +")";
                Elist.append(" or ");
                Elist.append(temp);
            }
-           Elist.append(")");
        }
        res.append("SCOPE_"+name+":");
        res.append(System.lineSeparator());
@@ -260,7 +273,7 @@ public class rules_writer {
        return res.toString();
    }
 
-   public String Write_Section(OVertex pSection){
+   public static String Write_Section(OVertex pSection){
        StringBuffer res = new StringBuffer();
        Iterable<OVertex> Successors=pSection.getVertices(ODirection.OUT);
        Iterator<OVertex> I = Successors.iterator();
@@ -276,12 +289,5 @@ public class rules_writer {
        return res.toString();
    }
 
-   public ArrayList<OVertex> VerticesList(ODatabaseDocument Doc){
-       ArrayList<OVertex> res = new ArrayList<>();
 
-       return res;
-   }
-   private static void MakeList(ArrayList<OVertex> L,OVertex V){
-
-   }
 }

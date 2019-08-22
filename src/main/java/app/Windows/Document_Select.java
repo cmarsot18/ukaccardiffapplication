@@ -62,6 +62,7 @@ public class Document_Select extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent a){
         new Document_Display(Current_server.LoadDocument(Document_Name,this.Log,this.Pass),Current_server,this.Log,this.Pass);
+        Current_server.Make_rules_list(Document_Name,"admin","admin");
         this.dispose();
     }
 }

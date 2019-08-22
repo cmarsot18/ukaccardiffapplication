@@ -1,10 +1,11 @@
 package app;
 
+import app.DB.DB;
 import app.Document.Paragraph;
 import app.Windows.*;
 
 
-public class test{
+public class Launch_App {
     public static void main(String[] args){
 //        Section root = new Section();
 //        root.SetName("doc");
@@ -52,7 +53,7 @@ public class test{
 //        text2.SetName("text2");
 //        text3.SetName("text3");
 //        text1.setA("(vert1>>n>>ne>>prout>>no)");
-//        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>app.test>>v>>none)");
+//        text1.setE("(tes5tplus>>none>>none>>none>>none)<$>(bleu1>>q>>app.Launch_App>>v>>none)");
 //        text1.setR("(rouge1>>e>>no>>ne>>noe)");
 //        text1.setS("(rose1>>a>>a>>onen>>nae)");
 //        text1.setText("rase1");
@@ -66,18 +67,18 @@ public class test{
 //        text3.setR("r3");
 //        text3.setS("s3");
 //        text3.setText("rase3");
-//        app.DB app.test= new app.DB();
-//        boolean Connection = app.test.Connection("remote:localhost","root","password");
-//        if(app.test.getDatabase().exists("doc")){
-//            app.test.getDatabase().drop("doc");
-//            app.test.getDatabase().drop("DocBis");
+//        app.DB app.Launch_App= new app.DB();
+//        boolean Connection = app.Launch_App.Connection("remote:localhost","root","password");
+//        if(app.Launch_App.getDatabase().exists("doc")){
+//            app.Launch_App.getDatabase().drop("doc");
+//            app.Launch_App.getDatabase().drop("DocBis");
 //            System.out.println("b");
 //        }
 //        if (Connection){
-//            app.test.SaveNewDocument(root,"admin","admin");
-//            Section load = app.test.LoadDocument("doc","admin","admin");
+//            app.Launch_App.SaveNewDocument(root,"admin","admin");
+//            Section load = app.Launch_App.LoadDocument("doc","admin","admin");
 //            load.SetName("DocBis");
-//            app.test.SaveNewDocument(load,"admin","admin");
+//            app.Launch_App.SaveNewDocument(load,"admin","admin");
 //            System.out.println("success");
 //        }else{
 //            System.out.println("fail");
@@ -86,9 +87,9 @@ public class test{
         //new Document_Display(root);
 //    new Doc_Creation();
     new Connection();
-//        new Document_Select(app.test);
-//        Text_Editor test =  new Text_Editor(text1,"","test");
-//            test.setVisible(true);
+//        new Document_Select(app.Launch_App);
+//        Text_Editor Launch_App =  new Text_Editor(text1,"","Launch_App");
+//            Launch_App.setVisible(true);
 //        new RASE(text1);
 //        System.out.println(text1.getR());
 //        System.out.println(text1.getA());
@@ -101,6 +102,7 @@ public class test{
 //        System.out.println(text1.getA());
 //        System.out.println(text1.getS());
 //        System.out.println(text1.getE());
+
     }
 }
 
