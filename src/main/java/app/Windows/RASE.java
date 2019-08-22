@@ -320,25 +320,29 @@ public class RASE extends JFrame implements ActionListener {
         int max = this.RASE_List.length;
         if (a.getSource() == submit){
             if(Current_pan != null){
-                String c1 = RASE_List[ind].substring(0, 1);
-                String c2 = RASE_List[ind].substring(1, 2);
-                if (c1.equals("R")) {
-                    this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
-                }
-                if (c1.equals("A")) {
-                    this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
-                }
-                if (c1.equals("S")) {
-                    this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
-                }
-                if (c1.equals("E")) {
-                    this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                if(Current_pan.GetTopic().equals("none")){
+                    JOptionPane jop3 = new JOptionPane();
+                    jop3.showMessageDialog(null, "Topic field can`t be empty", "No Topic", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    String c1 = RASE_List[ind].substring(0, 1);
+                    String c2 = RASE_List[ind].substring(1, 2);
+                    if (c1.equals("R")) {
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("A")) {
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("S")) {
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("E")) {
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    this.UIToData();
+                    System.out.println(Data.getR());
+                    this.dispose();
                 }
             }
-            this.UIToData();
-            System.out.println(Data.getR());
-            this.dispose();
-
         }
 
         if (a.getSource() == previous) {
@@ -350,7 +354,7 @@ public class RASE extends JFrame implements ActionListener {
             } else {
                 if (Current_pan.GetTopic().equals("none")) {
                     JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "Can`t access to the server", "Connection Failure", JOptionPane.ERROR_MESSAGE);
+                    jop3.showMessageDialog(null, "Topic field can`t be empty", "No Topic", JOptionPane.ERROR_MESSAGE);
                 } else {
                     String c1 = RASE_List[ind].substring(0, 1);
                     String c2 = RASE_List[ind].substring(1, 2);
@@ -389,7 +393,7 @@ public class RASE extends JFrame implements ActionListener {
             }else {
                 if(Current_pan.GetTopic().equals("none")){
                     JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "Can`t access to the server", "Connection Failure", JOptionPane.ERROR_MESSAGE);
+                    jop3.showMessageDialog(null, "Topic field can`t be empty", "No Topic", JOptionPane.ERROR_MESSAGE);
                 }else{
                     String c1 = RASE_List[ind].substring(0,1);
                     String c2 = RASE_List[ind].substring(1,2);
@@ -415,39 +419,47 @@ public class RASE extends JFrame implements ActionListener {
             }
         }
         if (a.getSource() == Select){
-            if(Current_pan != null){
-                String c1 = RASE_List[ind].substring(0,1);
-                String c2 = RASE_List[ind].substring(1,2);
-                if(c1.equals("R")){
-                    this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
-                }if(c1.equals("A")){
-                    this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
-                }if(c1.equals("S")){
-                    this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
-                }if(c1.equals("E")) {
-                    this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic()+">>"+Current_pan.GetProperties()+">>"+Current_pan.GetComparison()+">>"+Current_pan.GetValue()+">>"+Current_pan.GetUnit();
+            if(Current_pan.GetTopic().equals("none")){
+                JOptionPane jop3 = new JOptionPane();
+                jop3.showMessageDialog(null, "Topic field can`t be empty", "No Topic", JOptionPane.ERROR_MESSAGE);
+            }else {
+                if (Current_pan != null) {
+                    String c1 = RASE_List[ind].substring(0, 1);
+                    String c2 = RASE_List[ind].substring(1, 2);
+                    if (c1.equals("R")) {
+                        this.R[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("A")) {
+                        this.A[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("S")) {
+                        this.S[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    if (c1.equals("E")) {
+                        this.E[Integer.valueOf(c2)] = Current_pan.GetWord() + ">>" + Current_pan.GetTopic() + ">>" + Current_pan.GetProperties() + ">>" + Current_pan.GetComparison() + ">>" + Current_pan.GetValue() + ">>" + Current_pan.GetUnit();
+                    }
+                    panel.remove(Current_pan);
                 }
-                panel.remove(Current_pan);
+                System.out.println(Selected);
+                String temp = this.ChoicesToData(Selected);
+                String c1 = Selected.substring(0, 1);
+                String c2 = Selected.substring(1, 2);
+                if (c1.equals("R")) {
+                    ind = Integer.valueOf(c2);
+                }
+                if (c1.equals("A")) {
+                    ind = R.length + Integer.valueOf(c2);
+                }
+                if (c1.equals("S")) {
+                    ind = R.length + A.length + Integer.valueOf(c2);
+                }
+                if (c1.equals("E")) {
+                    ind = R.length + A.length + S.length + Integer.valueOf(c2);
+                }
+                Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
+                panel.add(Current_pan, BorderLayout.CENTER);
+                panel.updateUI();
             }
-            System.out.println(Selected);
-            String temp = this.ChoicesToData(Selected);
-            String c1 = Selected.substring(0,1);
-            String c2 = Selected.substring(1,2);
-            if(c1.equals("R")){
-                ind = Integer.valueOf(c2);
-            }
-            if(c1.equals("A")){
-                ind = R.length+ Integer.valueOf(c2);
-            }
-            if(c1.equals("S")){
-                ind = R.length + A.length + Integer.valueOf(c2);
-            }
-            if(c1.equals("E")) {
-                ind = R.length + A.length + S.length + Integer.valueOf(c2);
-            }
-            Current_pan = new Pan(this.ChoicesToData(this.RASE_List[ind]));
-            panel.add(Current_pan,BorderLayout.CENTER);
-            panel.updateUI();
         }
     }
 }

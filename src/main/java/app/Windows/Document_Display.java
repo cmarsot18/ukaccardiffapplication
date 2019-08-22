@@ -34,9 +34,13 @@ public class Document_Display extends JFrame implements ActionListener {
     private String opening_name;
     private boolean saved;
     private ArrayList<Text_Editor> OpenedEditors = new ArrayList<>();
+    private String Log;
+    private String Pass;
 
 
-    public Document_Display(Section root, DB pDB){
+    public Document_Display(Section root, DB pDB,String Login,String Password){
+        this.Log = Login;
+        this.Pass = Password;
         this.name_changed = false;
         this.saved = false;
         this.opening_name = root.Getname();
@@ -75,7 +79,7 @@ public class Document_Display extends JFrame implements ActionListener {
                         Text_Editor t = temp.next();
                     }
                     dispose();
-                    new Open_Create(Current_Server);
+                    new Open_Create(Current_Server,Log,Pass);
                 }else{
                     int answer = JOptionPane.showConfirmDialog(null,
                             "Document not committed, do you want to quit whatever?",
@@ -89,7 +93,7 @@ public class Document_Display extends JFrame implements ActionListener {
                             ;
                         }
                         dispose();
-                        new Open_Create(Current_Server);
+                        new Open_Create(Current_Server,Log,Pass);
                     }
                 }
             }

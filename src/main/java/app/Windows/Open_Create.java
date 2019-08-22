@@ -16,8 +16,12 @@ public class Open_Create extends JFrame implements ActionListener
     private JButton New = new JButton(("Create a document"));
     private  JPanel pan = new JPanel();
     private DB Current_Server;
+    private String Log;
+    private String Pass;
 
-    public Open_Create(DB pDB){
+    public Open_Create(DB pDB, String Login, String Password){
+        this.Log = Login;
+        this.Pass = Password;
         this.Current_Server = pDB;
         this.setSize(500,75);
         this.setLocationRelativeTo(null);
@@ -52,11 +56,11 @@ public class Open_Create extends JFrame implements ActionListener
     }
     public void actionPerformed(ActionEvent a){
         if(a.getSource() == Open){
-            new Document_Select(this.Current_Server);
+            new Document_Select(this.Current_Server,this.Log,this.Pass);
             this.dispose();
         }
         if(a.getSource() == New){
-            new Doc_Creation(this.Current_Server);
+            new Doc_Creation(this.Current_Server,this.Log,this.Pass);
             this.dispose();
         }
 

@@ -44,7 +44,7 @@ public class Connection extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent a){
         boolean Connected=Current_Server.Connection(server.getText(),user.getText(),String.valueOf(password.getPassword()));
         if(Connected){
-            new Open_Create(this.Current_Server);
+            new Open_Create(this.Current_Server,user.getText(),String.valueOf(password.getPassword()));
             this.dispose();
         }else{
             JOptionPane jop3 = new JOptionPane();

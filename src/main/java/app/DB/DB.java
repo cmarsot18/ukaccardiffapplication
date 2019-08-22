@@ -89,6 +89,8 @@ public class DB
                 for(k = 0; k < Topics.length ; k++ ){
                     vtemp = document.newVertex(Topic);
                     j = Topics[k].indexOf(">>",i);
+                    i=j+2;
+                    j = Topics[k].indexOf(">>",i);
                     stemp = Topics[k].substring(i,j);
                     vtemp.setProperty("Topic",stemp);
                     i=j+2;

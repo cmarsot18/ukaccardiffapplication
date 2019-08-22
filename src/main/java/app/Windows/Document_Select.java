@@ -16,8 +16,12 @@ public class Document_Select extends JFrame implements ActionListener {
     private JPanel pan = new JPanel();
     public String Document_Name;
     public DB Current_server;
+    private String Log;
+    private String Pass;
 
-    public Document_Select(DB pDB){
+    public Document_Select(DB pDB,String Login,String Password){
+        this.Log = Login;
+        this.Pass = Password;
         this.Current_server = pDB;
         this.setSize(500, 75);
         this.setLocationRelativeTo(null);
@@ -28,7 +32,7 @@ public class Document_Select extends JFrame implements ActionListener {
 
             public void windowClosing(WindowEvent e) {
                 dispose();
-                new Open_Create(Current_server);
+                new Open_Create(Current_server,Log,Pass);
             }
         });
         Select.addActionListener(this);
@@ -57,7 +61,7 @@ public class Document_Select extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent a){
-        new Document_Display(Current_server.LoadDocument(Document_Name,"root","password"),Current_server);
+        new Document_Display(Current_server.LoadDocument(Document_Name,this.Log,this.Pass),Current_server,this.Log,this.Pass);
         this.dispose();
     }
 }

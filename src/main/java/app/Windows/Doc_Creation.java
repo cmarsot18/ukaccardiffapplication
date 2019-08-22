@@ -15,9 +15,13 @@ public class Doc_Creation extends JFrame implements ActionListener {
     private JPanel pan = new JPanel();
     private JTextField Name = new JTextField();
     private DB Current_Server;
+    private String Log;
+    private String Pass;
 
 
-    public Doc_Creation(DB pDB) {
+    public Doc_Creation(DB pDB,String Login,String Password) {
+        this.Log = Login;
+        this.Pass = Password;
         this.Current_Server = pDB;
         this.setSize(500, 75);
         this.setLocationRelativeTo(null);
@@ -33,7 +37,7 @@ public class Doc_Creation extends JFrame implements ActionListener {
 
             public void windowClosing(WindowEvent e) {
                 dispose();
-                new Open_Create(Current_Server);
+                new Open_Create(Current_Server,Log,Pass);
             }
         });
         this.setTitle("Enter the name of the new document");
@@ -44,7 +48,7 @@ public class Doc_Creation extends JFrame implements ActionListener {
         Section NewDoc = new Section();
         NewDoc.SetName(this.Name.getText());
         Current_Server.SaveNewDocument(NewDoc,"admin","admin");
-        new Document_Display(NewDoc,Current_Server);
+        new Document_Display(NewDoc,Current_Server,this.Log,this.Pass);
         this.dispose();
     }
 }
