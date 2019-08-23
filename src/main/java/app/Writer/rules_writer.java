@@ -1,25 +1,20 @@
-package Writer;
+package app.Writer;
 
-import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
 import com.orientechnologies.orient.core.record.ODirection;
 import com.orientechnologies.orient.core.record.OVertex;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import app.DB.*;
 
 public class rules_writer {
-   public static void main(String[] args) {
-        File file = new File("v.txt");
+   public static void Write(DB pDB,File file,String Doc_name) {
         try{
-            DB test = new DB();
             FileWriter writer = new FileWriter(file);
-            test.Connection("remote:localhost","root","password");
-            ArrayList<OVertex> temp= test.Make_rules_list("CodeforSustainableHomes","admin","admin");
+            ArrayList<OVertex> temp= pDB.Make_rules_list(Doc_name,"admin","admin");
             Collections.reverse(temp);
             Iterator<OVertex> I = temp.iterator();
             OVertex vtemp;
@@ -52,6 +47,7 @@ public class rules_writer {
        Iterable<OVertex> Successors=pParagraph.getVertices(ODirection.OUT);
        Iterator<OVertex> I = Successors.iterator();
        String name = pParagraph.getProperty("name").toString();
+       name.replace(" ","");
        OVertex vtemp,R,A,S,E;
        R = null;
        A = null;
@@ -263,7 +259,7 @@ public class rules_writer {
            res.append("("+Rlist.toString()+")");
            res.append(System.lineSeparator());
        }
-       res.append("NAME :");
+       res.append(name+" :");
        res.append(System.lineSeparator());
        res.append("(REQUIREMENT "+name+" and "+"SCOPE "+name+")");
        res.append(System.lineSeparator());
@@ -277,14 +273,14 @@ public class rules_writer {
        StringBuffer res = new StringBuffer();
        Iterable<OVertex> Successors=pSection.getVertices(ODirection.OUT);
        Iterator<OVertex> I = Successors.iterator();
-       res.append("Section "+pSection.getProperty("name").toString()+":");
+       res.append("Section "+pSection.getProperty("name").toString().replace(" ","")+":");
        res.append(System.lineSeparator());
        OVertex temp= I.next();
-       res.append(temp.getProperty("name").toString());
+       res.append(temp.getProperty("name").toString().replace(" ",""));
        while(I.hasNext()){
            temp = I.next();
            res.append(" and ");
-           res.append(temp.getProperty("name").toString());
+           res.append(temp.getProperty("name").toString().replace(" ",""));
        }
        return res.toString();
    }

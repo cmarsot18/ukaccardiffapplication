@@ -14,6 +14,7 @@ public class Open_Create extends JFrame implements ActionListener
 {
     private JButton Open = new JButton("Open a document");
     private JButton New = new JButton(("Create a document"));
+    private JButton Rules = new JButton("Make rules");
     private  JPanel pan = new JPanel();
     private DB Current_Server;
     private String Log;
@@ -47,10 +48,12 @@ public class Open_Create extends JFrame implements ActionListener
         });
         Open.addActionListener(this);
         New.addActionListener(this);
+        Rules.addActionListener(this);
         pan.setBackground(Color.LIGHT_GRAY);
         pan.setLayout(new GridLayout(1,2));
         pan.add(Open);
         pan.add(New);
+        pan.add(Rules);
         this.setContentPane(pan);
         this.setVisible(true);
     }
@@ -63,6 +66,9 @@ public class Open_Create extends JFrame implements ActionListener
             new Doc_Creation(this.Current_Server,this.Log,this.Pass);
             this.dispose();
         }
-
+        if(a.getSource() == Rules){
+            new Rules_Maker(Current_Server,Log,Pass);
+            this.dispose();
+        }
     }
 }

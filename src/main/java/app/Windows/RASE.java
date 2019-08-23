@@ -22,7 +22,7 @@ public class RASE extends JFrame implements ActionListener {
     private String[] S;
     private String[] E;
     private String Selected;
-    private int ind = 0;
+    private int ind;
     private String[] RASE_List;
     private Paragraph Data;
 
