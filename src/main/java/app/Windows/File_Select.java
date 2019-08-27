@@ -29,7 +29,6 @@ public class File_Select extends JFrame{
         this.add(FileChoose);
         if (FileChoose.showOpenDialog(null)== JFileChooser.APPROVE_OPTION){
             app.Writer.rules_writer.Write(Current_server,FileChoose.getSelectedFile(),Doc_name);
-            this.dispose();
         }
         this.setVisible(true);
     }

@@ -33,7 +33,6 @@ public class Document_Display extends JFrame implements ActionListener {
     private boolean name_changed;
     private String opening_name;
     private boolean saved;
-    private ArrayList<Text_Editor> OpenedEditors = new ArrayList<>();
     private String Log;
     private String Pass;
 
@@ -74,10 +73,6 @@ public class Document_Display extends JFrame implements ActionListener {
 
             public void windowClosing(WindowEvent e) {
                 if(saved){
-                    Iterator<Text_Editor> temp = OpenedEditors.iterator();
-                    while (temp.hasNext()){
-                        Text_Editor t = temp.next();
-                    }
                     dispose();
                     new Open_Create(Current_Server,Log,Pass);
                 }else{
@@ -87,11 +82,6 @@ public class Document_Display extends JFrame implements ActionListener {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
                     if(answer == JOptionPane.YES_OPTION ){
-                        Iterator<Text_Editor> temp = OpenedEditors.iterator();
-                        while ((temp.hasNext())&&(!OpenedEditors.isEmpty())){
-                            Text_Editor t = temp.next();
-                            ;
-                        }
                         dispose();
                         new Open_Create(Current_Server,Log,Pass);
                     }
@@ -103,7 +93,7 @@ public class Document_Display extends JFrame implements ActionListener {
         this.setVisible(true);
 
     }
-
+    //Create the displayed tree in the JFrame from the root
     private static DefaultMutableTreeNode displaydocument(Section pSection){
         if (pSection.GetSuccessors().isEmpty()){
             DefaultMutableTreeNode temp = new DefaultMutableTreeNode(pSection.GetSubsectionNumber()+"."+pSection.Getname());
@@ -118,7 +108,7 @@ public class Document_Display extends JFrame implements ActionListener {
             return temp;
         }
     }
-
+    //Allow to interact with the tree
     private void TreeListener(){
         Document.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
@@ -126,6 +116,7 @@ public class Document_Display extends JFrame implements ActionListener {
                     selected = getAbsolutePath(e.getPath());
                 }
             }
+            //write the path by a specific way that allow to use like : SectionName1<%>SectionName2<%>ParagraphName
             private String getAbsolutePath(TreePath treePath){
                 String str = "";
                 for(Object name : treePath.getPath()){
@@ -136,7 +127,7 @@ public class Document_Display extends JFrame implements ActionListener {
             }
         });
     }
-
+    //allow to have the whole tree expand when it opens
     private void expandAllNodes(JTree tree) {
         int j = tree.getRowCount();
         int i = 0;
@@ -146,7 +137,7 @@ public class Document_Display extends JFrame implements ActionListener {
             j = tree.getRowCount();
         }
     }
-
+    //Refresh the display after any modification
     private void refresh(){
         pan.removeAll();
         pan.updateUI();
@@ -215,7 +206,6 @@ public class Document_Display extends JFrame implements ActionListener {
             if(Selected instanceof Paragraph){
                 Paragraph temp = (Paragraph) Selected;
                 Text_Editor editor = new Text_Editor(temp,((Paragraph) Selected).getText(),Selected.Getname());
-                OpenedEditors.add(editor);
                 editor.setVisible(true);
             }else{
                 JOptionPane jop = new JOptionPane();
@@ -232,6 +222,7 @@ public class Document_Display extends JFrame implements ActionListener {
             this.refresh();
             this.saved=false;
         }
+
         if(a.getSource() == Move){
             Section temp = root.GetSectionFromRoot(selected);
             int NumberOfSuccessors = temp.GetPredecessor().GetSuccessors().size();

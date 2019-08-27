@@ -68,6 +68,7 @@ public class Paragraph extends Section
         this.text = text;
     }
 
+    //Allow to extract the highlighted word in an HTML Text
     public static ArrayList<String> ExtractColor(String color,String HTML){
         ArrayList<String> temp = new ArrayList<String>();
         int max = HTML.length();
@@ -82,12 +83,14 @@ public class Paragraph extends Section
         }
         return temp;
     }
-
+    //Allows to update the Data by checking what changed from an old version of the HTML text
     public void update(String HTML){
+        //Initialize colors
         String RED = "<span style=\"background-color: rgb(255, 0, 0);\">";
         String BLUE = "<span style=\"background-color: rgb(0, 255, 255);\">";
         String PINK = "<span style=\"background-color: rgb(255, 0, 255);\">";
         String GREEN = "<span style=\"background-color: rgb(0, 255, 0);\">";
+        //initialize Variables
         String pR;
         String pA;
         String pS;
@@ -108,6 +111,7 @@ public class Paragraph extends Section
         ArrayList<String> old_a = new ArrayList<>();
         ArrayList<String> old_s = new ArrayList<>();
         ArrayList<String> old_e = new ArrayList<>();
+        //Check the new R Topics
         Iterator<String> i = r_html.iterator();
         String temp;
         while(i.hasNext()){
@@ -120,6 +124,7 @@ public class Paragraph extends Section
                 }
             }
         }
+        //Check the new A Topics
         i = a_html.iterator();
         while(i.hasNext()){
             temp = i.next();
@@ -131,6 +136,7 @@ public class Paragraph extends Section
                 }
             }
         }
+        //Check the new S Topics
         i = s_html.iterator();
         while(i.hasNext()){
             temp = i.next();
@@ -142,6 +148,7 @@ public class Paragraph extends Section
                 }
             }
         }
+        //Check the new E Topics
         i = e_html.iterator();
         while(i.hasNext()){
             temp = i.next();
@@ -153,6 +160,7 @@ public class Paragraph extends Section
                 }
             }
         }
+        //Check R Topics already present
         if(!(r_data == null)){
             i = r_data.iterator();
             while(i.hasNext()){
@@ -167,6 +175,7 @@ public class Paragraph extends Section
                 this.R = remove(this.R,temp);
             }
         }
+        //Check A Topics already present
         if(!(a_data == null)){
             i = a_data.iterator();
             while(i.hasNext()){
@@ -181,6 +190,7 @@ public class Paragraph extends Section
                 this.A = remove(this.A,temp);
             }
         }
+        //Check S Topics already present
         if(!(s_data == null)){
             i = s_data.iterator();
             while(i.hasNext()){
@@ -195,6 +205,7 @@ public class Paragraph extends Section
                 this.S = remove(this.S,temp);
             }
         }
+        //Check E Topics already present
         if(!(e_data == null)){
             i = e_data.iterator();
             while(i.hasNext()){
@@ -209,6 +220,7 @@ public class Paragraph extends Section
                 this.E = remove(this.E,temp);
             }
         }
+        //Register R Topics
         i =  new_r.iterator();
         String stemp;
         if(!new_r.isEmpty()){
@@ -225,6 +237,7 @@ public class Paragraph extends Section
                 this.setR(this.R+"<$>"+pR);
             }
         }
+        //Register A Topics
         i = new_a.iterator();
         if(!new_a.isEmpty()){
             stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
@@ -240,6 +253,7 @@ public class Paragraph extends Section
                 this.setA(this.A+"<$>"+pA);
             }
         }
+        //Register S Topics
         i = new_s.iterator();
         if(!new_s.isEmpty()){
             stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";
@@ -255,6 +269,7 @@ public class Paragraph extends Section
                 this.setS(this.S+"<$>"+pS);
             }
         }
+        //Register E Topics
         i = new_e.iterator();
         if(!new_e.isEmpty()){
             stemp ="("+ i.next()+">>none>>none>>none>>none>>none)";

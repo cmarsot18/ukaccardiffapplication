@@ -16,6 +16,7 @@ public class Rules_Maker extends JFrame implements ActionListener {
     public DB Current_server;
     private String Log;
     private String Pass;
+    private JFileChooser FileChoose = new JFileChooser();
 
     public Rules_Maker(DB pDB,String Login,String Password){
         this.Log = Login;
@@ -59,6 +60,9 @@ public class Rules_Maker extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent a){
-        new File_Select(Log,Pass,Document_Name,Current_server);
+        this.add(FileChoose);
+        if (FileChoose.showOpenDialog(null)== JFileChooser.APPROVE_OPTION){
+            app.Writer.rules_writer.Write(Current_server,FileChoose.getSelectedFile(),Document_Name);
+        }
     }
 }

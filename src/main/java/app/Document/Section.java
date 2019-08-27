@@ -86,7 +86,7 @@ public class Section
             k++;
         }
     }
-
+    //allow to get a section from the root of the tree by giving the path in the Document_display
     public Section GetSectionFromRoot(String Path){
         if((Path.indexOf("<%>")+4)>Path.length()){
             return this;
@@ -132,14 +132,6 @@ public class Section
         this.GetPredecessor().DeleteSuccessor(this.GetSubsectionNumber());
     }
 
-    public void PrintSuccessors(){
-        Iterator<Section> I = this.Successors.iterator();
-        while (I.hasNext()){
-            Section temp = I.next();
-            System.out.println(temp.Getname());
-
-        }
-    }
 }
 
 

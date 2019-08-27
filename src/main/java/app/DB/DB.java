@@ -16,7 +16,7 @@ import app.Windows.RASE;
 
 import java.util.*;
 
-
+//this class allows to interact with the server
 public class DB
 {
     OrientDB Database;
@@ -26,7 +26,7 @@ public class DB
     public DB(){
         Database = null;
     }
-
+    //function made to connect to the server, return true if connection get established
     public boolean Connection(String URL,String Login,String Password){
         boolean Connection_established;
         this.Login = Login;
@@ -47,14 +47,15 @@ public class DB
             return Connection_established;
         }
     }
+
     public OrientDB getDatabase(){
         return this.Database;
     }
-
+    //Function made to Save a document to the Database
     public void SaveNewDocument(Section root,String Login,String Password){
         this.Database.create(root.Getname().replace(" ",""),ODatabaseType.PLOCAL);
         ODatabaseDocument document = Database.open(root.Getname().replace(" ",""),Login,Password);
-
+        //Init the different class linked to document structure
         OClass Section = document.createVertexClass("Section");
         OClass Paragraph = document.createVertexClass("Paragraph");
         OClass Topic = document.createVertexClass("Topic");
@@ -62,10 +63,11 @@ public class DB
         OClass A_RASE = document.createVertexClass("A_RASE");
         OClass S_RASE = document.createVertexClass("S_RASE");
         OClass E_RASE = document.createVertexClass("E_RASE");
+        //Saving the data to DB
         SectionToVertex(root,document,Paragraph,Section,R_RASE,A_RASE,S_RASE,E_RASE,Topic);
         document.close();
     }
-
+    //Recursive method that allow to go from de Section/Paragraph to the DataBase
     public OVertex SectionToVertex(Section pSection, ODatabaseDocument document,OClass Paragraph ,OClass Section, OClass pR, OClass pA, OClass pS, OClass pE,OClass Topic ){
         if(pSection instanceof Paragraph){
             OVertex v = document.newVertex(Paragraph);
@@ -75,6 +77,7 @@ public class DB
             v.setProperty("S",((Paragraph) pSection).getS());
             v.setProperty("E",((Paragraph) pSection).getE());
             v.setProperty("Text",((Paragraph) pSection).getText());
+            //Add the R field to the paragraph if it`s not empty
             if(((Paragraph) pSection).getR().length() != 1){
                 OVertex R = document.newVertex(pR);
                 R.save();
@@ -85,6 +88,7 @@ public class DB
                 int i,j,k;
                 String stemp;
                 OVertex vtemp;
+                //Reader of the different topic
                 for(k = 0; k < Topics.length ; k++ ){
                     i=0;
                     vtemp = document.newVertex(Topic);
@@ -113,6 +117,7 @@ public class DB
                     vtemp.save();
                 }
             }
+            //Add the A field to the paragraph if it`s not empty
             if(((Paragraph) pSection).getA().length() != 1){
                 OVertex A = document.newVertex(pA);
                 A.save();
@@ -123,6 +128,7 @@ public class DB
                 int i,j,k;
                 String stemp;
                 OVertex vtemp;
+                //Reader of the different topic
                 for(k = 0; k < Topics.length ; k++ ){
                     i=0;
                     vtemp = document.newVertex(Topic);
@@ -151,6 +157,7 @@ public class DB
                     vtemp.save();
                 }
             }
+            //Add the S field to the paragraph if it`s not empty
             if(((Paragraph) pSection).getS().length() != 1){
                 OVertex S  = document.newVertex(pS);
                 S.save();
@@ -161,6 +168,7 @@ public class DB
                 int i,j,k;
                 String stemp;
                 OVertex vtemp;
+                //Reader of the different topic
                 for(k = 0; k < Topics.length ; k++ ){
                     i=0;
                     vtemp = document.newVertex(Topic);
@@ -189,6 +197,7 @@ public class DB
                     vtemp.save();
                 }
             }
+            //Add the E field to the paragraph if it`s not empty
             if(((Paragraph) pSection).getE().length() != 1){
                 OVertex E = document.newVertex(pE);
                 E.save();
@@ -200,6 +209,7 @@ public class DB
                 i=0;
                 String stemp;
                 OVertex vtemp;
+                //Reader of the different topic
                 for(k = 0; k < Topics.length ; k++ ){
                     i=0;
                     vtemp = document.newVertex(Topic);
@@ -240,27 +250,31 @@ public class DB
             }
             v.save();
             int i;
+            //applying the recursion to all successors
             for(i=0;i<pSection.GetSuccessors().size();i++){
                 Section stemp = pSection.GetSuccessors().get(i);
                 OVertex vtemp = this.SectionToVertex(stemp,document,Paragraph,Section,pR,pA,pS,pE,Topic);
+                //make the link between vertices
                 OEdge etemp = document.newEdge(v,vtemp);
                 etemp.save();
             }
             return v;
         }
     }
-
+    //Allow to load a document from the DataBase
     public Section LoadDocument(String DocName,String Login,String Password){
         ODatabaseDocument Doc = Database.open(DocName,Login,Password);
+        //the following lines allow to get the root of the document, in fact the root predecessors is root_init_doc
         OResultSet tryroot =  Doc.query("SELECT * FROM V WHERE PredecessorName = \"root_init_doc\"");
         String rid =  tryroot.next().getProperty("@rid").toString();
         ORecordId id = new ORecordId(rid);
         OVertex root = Doc.getRecord(id);
+        //Give the root to the recursive function to make go From Database to Section/Paragraph storage
         Section res = VertexToSection(root);
         tryroot.close();
         return res;
     }
-
+    //Reverse of SectionToVertex
     public Section VertexToSection(OVertex pVertex){
         Iterable<OVertex> Successors=pVertex.getVertices(ODirection.OUT);
         String temp = pVertex.getProperty("@class").toString();
@@ -294,7 +308,7 @@ public class DB
         }
 
     }
-
+    //method that return the list of Vertices from the DataBase
     public ArrayList<OVertex> Make_rules_list(String DocName,String Login,String Password){
         ArrayList<OVertex> res = new ArrayList<>();
         ODatabaseDocument Doc = Database.open(DocName,Login,Password);
@@ -303,15 +317,9 @@ public class DB
         ORecordId id = new ORecordId(rid);
         OVertex root = Doc.getRecord(id);
         Listing_Vertex(res,root);
-        Iterator<OVertex> temp = res.iterator();
-        OVertex vtemp;
-        while(temp.hasNext()){
-            vtemp = temp.next();
-//            System.out.println(vtemp.getProperty("name").toString());
-        }
         return res;
     }
-
+    //recursive method that makes the List used for the rules
     private static void Listing_Vertex(ArrayList<OVertex> list, OVertex V){
         Iterable<OVertex> Successors=V.getVertices(ODirection.OUT);
         String temp = V.getProperty("@class").toString();
@@ -325,7 +333,6 @@ public class DB
                 vtemp = I.next();
                 Listing_Vertex(list,vtemp);
             }
-
         }
     }
 
